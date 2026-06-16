@@ -1,0 +1,17 @@
+# Human-readable dependency intent. Pinned versions are captured in
+# requirements.txt via `pip freeze` from the working .venv (Python 3.11).
+
+# Layer A — EEG ML
+mne
+scikit-learn
+numpy
+scipy
+pandas
+matplotlib
+
+# Layer B — clinician dashboard
+streamlit
+plotly
+
+# tooling
+pytest
