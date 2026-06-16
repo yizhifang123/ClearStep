@@ -21,6 +21,16 @@ LABELS = {"HC": 0, "MDD": 1}  # positive class = MDD (the clinical "case")
 # MNE's standard_1020 montage uses modern temporal/parietal names (T7/T8/P7/P8).
 _OLD_TO_MODERN = {"T3": "T7", "T4": "T8", "T5": "P7", "T6": "P8"}
 
+# Standard 10-20 SCALP electrodes we keep. Everything else (e.g. the Mumtaz
+# 'A2-A1' linked-ear reference and '23A-23R'/'24A-24R' auxiliary channels) is
+# dropped so it can't contaminate the average reference or global features.
+SCALP_1020 = {
+    "Fp1", "Fp2", "F7", "F3", "Fz", "F4", "F8",
+    "T7", "C3", "Cz", "C4", "T8",
+    "P7", "P3", "Pz", "P4", "P8",
+    "O1", "O2",
+}
+
 
 def clean_channel_name(name: str) -> str:
     """Map raw EDF channel labels to standard 10-20 names.
@@ -49,6 +59,7 @@ def process_raw(
     Split out from file I/O so the MNE pipeline is testable on a synthetic Raw.
     """
     raw.rename_channels({c: clean_channel_name(c) for c in raw.ch_names})
+    raw.pick([c for c in raw.ch_names if c in SCALP_1020])  # scalp electrodes only
     raw.set_montage("standard_1020", on_missing="ignore", verbose="ERROR")
 
     if notch:

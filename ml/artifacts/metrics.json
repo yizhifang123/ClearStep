@@ -1,0 +1,48 @@
+{
+  "condition": "EC",
+  "features": [
+    "rel_delta_global",
+    "rel_theta_global",
+    "rel_alpha_global",
+    "rel_beta_global",
+    "rel_gamma_global",
+    "rel_delta_frontal",
+    "rel_theta_frontal",
+    "rel_alpha_frontal",
+    "rel_beta_frontal",
+    "rel_gamma_frontal",
+    "rel_delta_posterior",
+    "rel_theta_posterior",
+    "rel_alpha_posterior",
+    "rel_beta_posterior",
+    "rel_gamma_posterior",
+    "faa_F4_F3"
+  ],
+  "honest_loso": {
+    "n_subjects": 58,
+    "n_mdd": 30,
+    "auc_loso": 0.9500000000000001,
+    "accuracy_loso": 0.9310344827586207,
+    "sensitivity": 0.9333333333333333,
+    "specificity": 0.9285714285714286,
+    "confusion_tn_fp_fn_tp": [
+      26,
+      2,
+      2,
+      28
+    ],
+    "permutation_auc": 0.9522222222222222,
+    "permutation_pvalue": 0.000999000999000999,
+    "majority_class_accuracy": 0.5172413793103449,
+    "chance_auc": 0.5
+  },
+  "leakage_demo": {
+    "leaky_accuracy": 0.8834606502042992,
+    "leaky_auc": 0.9392347071043614,
+    "grouped_accuracy": 0.8466275833481376,
+    "grouped_auc": 0.8877187353971024,
+    "delta_accuracy": 0.03683306685616161,
+    "n_epochs": 16887,
+    "n_subjects": 58
+  }
+}

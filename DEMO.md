@@ -1,27 +1,31 @@
 # DEMO.md — How to present this prototype
 
-A ~3-minute walkthrough that leads with honesty (the thing that lands with people who know this field).
+Lead with honesty — that's what lands with people who know this field.
 
 ## The one-line pitch
-> Depression treatment is trial-and-error. This is a *decision-support* prototype that explores how EEG (+ hormonal) signals could help a psychiatrist personalize treatment — built honestly, with the clinician always in control, and openly stating where the science isn't there yet.
+> Depression treatment is trial-and-error. This is a *decision-support* prototype exploring how EEG (+ hormonal) signals could help a psychiatrist personalize treatment — built honestly, the clinician always in control, openly stating where the science isn't there yet.
 
-## The two-layer story (say this explicitly)
-- **Layer A is real.** A genuine EEG→features→classifier pipeline on the open Mumtaz dataset, distinguishing **MDD vs. healthy control** — *not* treatment response, because no open data supports that.
-- **Layer B is illustrative.** A clinician dashboard on *synthetic* cases showing the envisioned workflow (subtype/treatment leanings, cortisol) with loud uncertainty and human-in-the-loop — clearly labeled simulated.
+## The two-layer story (say it explicitly)
+- **Layer A is real.** A genuine EEG → features → classifier on the open Mumtaz dataset, **MDD vs. healthy control** — *not* treatment response (no open data supports that).
+- **Layer B is illustrative.** A clinician dashboard on *synthetic* cases showing the envisioned workflow with loud uncertainty + human-in-the-loop, clearly labeled simulated.
 - The honesty of that separation is the point.
 
-## Suggested flow
-1. **Home page** — show the real-vs-illustrative table. Set expectations up front.
-2. **Model Card → the leakage demonstration** *(the headline)*. Same model, two validation schemes: leaky k-fold vs. honest subject-wise. Point at the accuracy gap and say: *"the famous '98% MDD detection' headlines come from the leaky split — reported on this very dataset. Here's the honest number."* This is the most memorable 30 seconds.
-3. **Real Case page** — pick a held-out subject; show the calibrated probability, the confidence state, and the feature-contribution explanation. Note a low-confidence case is auto-flagged for review.
-4. **Illustrative Case page** — generate a synthetic adolescent; show EEG + synthetic cortisol → an *illustrative* subtype leaning, then explicitly say what the tool does **not** do (pick or dose a drug), and why (rACC theta is prognostic not prescriptive; pharmacogenomic pickers failed in an adolescent RCT).
-5. **Close on the banner + human-in-the-loop**: "research prototype, not for clinical use; the AI suggests, the clinician decides."
+## The honest result — and the move is NOT to oversell it
+Subject-wise validation gives **AUC ≈ 0.95 / 93% accuracy** (permutation p < 0.01) on n=58. Say it, then immediately puncture it:
+- "It's *correctly* validated — subject-wise, no leakage, permutation-tested — so it isn't the usual overfit artifact."
+- "But it's driven mostly by **relative beta power**, which can be muscle/EMG or an acquisition confound as easily as depression — and Mumtaz is a small, single-site, **adult** dataset that's known to over-separate."
+- "So: a high number, honestly reported, with the concrete reasons you still shouldn't trust it clinically. *That honesty is the deliverable.*"
+- Bonus: **frontal alpha asymmetry barely contributes** — matching the research that FAA is a near-null biomarker. Our own result corroborates the honest literature.
 
-## Talking points that build credibility
-- "There is no validated biomarker taxonomy that maps to treatment — the middle of this pipeline is the open research problem, so we didn't fake it."
-- "We validated subject-wise to avoid the leakage that inflates most EEG-depression papers."
-- "Frontal alpha asymmetry is in our feature set but it's *not* a validated biomarker (meta-analytic d ≈ 0) — it's one input, never a verdict."
-- "An EEG tool processes a physiological signal, so for real clinical use it'd be a regulated *device*, not exempt decision-support — which is exactly why this is research-only."
+## The leakage demonstration — a discipline check, not a gotcha
+Same model, leaky k-fold vs. subject-wise: **≈88% vs. ≈85%** (epoch level). The gap is modest *because* we used low-dimensional features. Point to make: "leakage inflates in the expected direction; the famous 98%→chance collapses need high-capacity models — we avoided both the leakage *and* the over-capacity."
+
+## Suggested 3-minute flow
+1. **Home** — the real-vs-illustrative table. Set expectations.
+2. **Model Card** — the AUC, then the "high accuracy ≠ clinical utility" caveat + the beta-driver table. This is the credibility moment.
+3. **Real Case** — pick a held-out subject; show the calibrated probability, confidence state, and feature-contribution explanation; note low-confidence cases auto-flag for review.
+4. **Illustrative Case** — a curated synthetic adolescent; EEG + synthetic cortisol → an *illustrative* subtype leaning; then state what the tool does **not** do (pick/dose a drug) and why (rACC theta is prognostic not prescriptive; pharmacogenomic pickers failed in an adolescent RCT).
+5. **Close** on the banner + human-in-the-loop: "research prototype, not for clinical use; the AI suggests, the clinician decides."
 
 ## What's real vs. illustrative (if asked)
-Real: the EEG→MDD-vs-HC model, its subject-wise metrics, and the leakage demo. Illustrative/synthetic: all hormonal inputs, subtype leanings, treatment framing, and the adolescent cases. See `RESEARCH.md` for sources and `PLAN.md` for scope.
+Real: the EEG→MDD-vs-HC model, its subject-wise metrics, the leakage demo, the beta-driver finding. Illustrative/synthetic: all hormonal inputs, subtype leanings, treatment framing, and adolescent cases. Sources in `RESEARCH.md`; scope in `PLAN.md`.
