@@ -87,6 +87,21 @@ if model is not None:
                "little — consistent with FAA being a near-null biomarker. Beta-driven "
                "separation is exactly why the confound caveat above matters.")
 
+rob_path = Path("ml/artifacts/robustness.json")
+if rob_path.exists():
+    import json
+    rob = json.loads(rob_path.read_text())
+    st.subheader("Robustness — eyes-closed vs. eyes-open")
+    st.dataframe(pd.DataFrame([
+        {"condition": c, "n": v["n_subjects"], "AUC": round(v["auc_loso"], 2),
+         "accuracy": round(v["accuracy_loso"], 2),
+         "sensitivity": round(v["sensitivity"], 2),
+         "specificity": round(v["specificity"], 2)}
+        for c, v in rob.items()]))
+    st.caption("The MDD-vs-HC signal persists across both resting conditions (a good "
+               "robustness sign) — though a *stable* confound (site/acquisition) would "
+               "also be condition-robust, so this does not rule one out.")
+
 st.subheader("Key limitations (honest)")
 st.markdown(
     "- **Frontal alpha asymmetry is not a validated diagnostic biomarker** (meta-analytic "

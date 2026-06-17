@@ -1,0 +1,22 @@
+{
+  "EC": {
+    "n_subjects": 58,
+    "n_mdd": 30,
+    "auc_loso": 0.9500000000000001,
+    "accuracy_loso": 0.9310344827586207,
+    "sensitivity": 0.9333333333333333,
+    "specificity": 0.9285714285714286,
+    "permutation_pvalue": 0.001996007984031936,
+    "leak_delta_accuracy": 0.03683306685616161
+  },
+  "EO": {
+    "n_subjects": 61,
+    "n_mdd": 32,
+    "auc_loso": 0.9234913793103448,
+    "accuracy_loso": 0.8688524590163934,
+    "sensitivity": 0.8125,
+    "specificity": 0.9310344827586207,
+    "permutation_pvalue": 0.001996007984031936,
+    "leak_delta_accuracy": 0.038934694411726145
+  }
+}

@@ -21,7 +21,8 @@ Layer A trains on **open, licensed** EEG data. **Raw EEG is not committed** (lic
 Then run the Layer A pipeline (see README → `ml/train.py`).
 
 ## Fallback: OpenNeuro ds003478 (CC0)
-- https://openneuro.org/datasets/ds003478 — 64-ch, 122 young adults, **BDI-defined (subclinical)** labels. Frictionless, but a weaker clinical claim; used only as a robustness check. Place under `data/raw/ds003478/`.
+- https://openneuro.org/datasets/ds003478 — 64-ch, 122 young adults, **BDI-defined (subclinical)** labels. Frictionless (CC0) but ~**9.4 GB**. Place under `data/raw/ds003478/`.
+- After download, run the **cross-dataset transfer check**: `.venv/bin/python -m ml.transfer_eval --data-root data/raw/ds003478`. This applies the Mumtaz-trained model to ds003478 (we expect AUC to drop — that's the honest generalization test). `ml/transfer_eval.py` is a scaffold: verify its `participants.tsv` column names / file extension against the real files first.
 
 ## Not used
 - **MODMA** — gated (institutional email + signed EULA + admin approval); excluded for a 1-week build.

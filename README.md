@@ -11,6 +11,14 @@ Two clearly-separated layers; the honesty of the separation is the point.
 
 See `RESEARCH.md` (domain evidence + sources) and `PLAN.md` (scope, architecture, validation, risks).
 
+## Screenshots
+
+| Home — real vs. illustrative | Model Card — honest metrics + caveats |
+|---|---|
+| ![Home](docs/screenshots/01_home.png) | ![Model Card](docs/screenshots/02_model_card.png) |
+| **Real Case — calibrated probability, explanation, human-in-the-loop** | **Illustrative Case — synthetic workflow** |
+| ![Real Case](docs/screenshots/03_real_case.png) | ![Illustrative Case](docs/screenshots/04_illustrative_case.png) |
+
 ## Status
 🚧 Phase 2 (build): Layer A pipeline + Layer B dashboard implemented and tested (test suite green). Awaiting the EEG data download to generate the real metrics/figures — the app runs now, and the synthetic workflow is fully functional without it.
 
@@ -43,3 +51,16 @@ The dashboard runs **without** step 3: Layer A panels show a "run training" hint
 
 ## Responsible-AI commitments
 Human-in-the-loop (the clinician decides), visible & calibrated uncertainty, explainability, automatic low-confidence flagging, synthetic-or-licensed data only, and a persistent "not for clinical use" notice. See `PLAN.md` §6.
+
+## Submission materials
+- `SUBMISSION.md` — project writeup (problem, approach, results, what's next)
+- `SLIDES.md` — slide deck (render with [Marp](https://marp.app/) or `make-pdf`)
+- `DEMO.md` / `VIDEO_SCRIPT.md` — live-demo walkthrough and recording script
+- `RESEARCH.md` — sourced domain memo; `PLAN.md` — scope & architecture
+
+## Acknowledgments & data attribution
+- **EEG data:** Mumtaz, W. (2016). *MDD Patients and Healthy Controls EEG Data (New).* figshare, CC BY 4.0. https://doi.org/10.6084/m9.figshare.4244171.v2 — not redistributed here (see `data/download.md`).
+- Built with MNE-Python, scikit-learn, and Streamlit.
+
+## License
+MIT (code only) — see `LICENSE`. This is a research prototype, **not** a medical device and **not** for clinical use.
