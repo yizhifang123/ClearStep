@@ -29,13 +29,13 @@ with col1:
         "- See the **Real case (Layer A)** page →")
     m = model_io.load_metrics()
     if m:
-        h, l = m["honest_loso"], m["leakage_demo"]
+        h, leak = m["honest_loso"], m["leakage_demo"]
         a, b = st.columns(2)
         a.metric("Honest LOSO AUC", f"{h['auc_loso']:.2f}")
         b.metric("Leakage Δ accuracy",
-                 f"{l['delta_accuracy']:+.0%}",
-                 help=f"Leaky k-fold {l['leaky_accuracy']:.0%} vs honest "
-                      f"subject-wise {l['grouped_accuracy']:.0%}.")
+                 f"{leak['delta_accuracy']:+.0%}",
+                 help=f"Leaky k-fold {leak['leaky_accuracy']:.0%} vs honest "
+                      f"subject-wise {leak['grouped_accuracy']:.0%}.")
     else:
         st.info("Layer A artifacts not found yet. Place data (see `data/download.md`) "
                 "then run `.venv/bin/python -m ml.train`.")

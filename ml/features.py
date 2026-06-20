@@ -78,11 +78,14 @@ def epoch_feature_matrix(epochs, fmin: float = 1.0, fmax: float = 40.0):
 
     cols, names = [], []
     for b in BANDS:
-        cols.append(np.nanmean(rel[b], axis=1)); names.append(f"rel_{b}_global")
+        cols.append(np.nanmean(rel[b], axis=1))
+        names.append(f"rel_{b}_global")
     for b in BANDS:
-        cols.append(region(rel[b], FRONTAL)); names.append(f"rel_{b}_frontal")
+        cols.append(region(rel[b], FRONTAL))
+        names.append(f"rel_{b}_frontal")
     for b in BANDS:
-        cols.append(region(rel[b], POSTERIOR)); names.append(f"rel_{b}_posterior")
+        cols.append(region(rel[b], POSTERIOR))
+        names.append(f"rel_{b}_posterior")
 
     a = absbp["alpha"]                                # (n_ep, n_ch)
     if "F3" in chidx and "F4" in chidx:
@@ -91,7 +94,8 @@ def epoch_feature_matrix(epochs, fmin: float = 1.0, fmax: float = 40.0):
         faa = np.log(right) - np.log(left)
     else:
         faa = np.full(a.shape[0], np.nan)
-    cols.append(faa); names.append("faa_F4_F3")
+    cols.append(faa)
+    names.append("faa_F4_F3")
 
     return np.column_stack(cols), names
 

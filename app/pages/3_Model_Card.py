@@ -36,7 +36,7 @@ if not metrics:
     st.info("Run `.venv/bin/python -m ml.train` to populate honest metrics and figures.")
     st.stop()
 
-h, l = metrics["honest_loso"], metrics["leakage_demo"]
+h, leak = metrics["honest_loso"], metrics["leakage_demo"]
 st.subheader("Layer A — honest performance (leave-one-subject-out)")
 m1, m2, m3, m4 = st.columns(4)
 m1.metric("ROC-AUC", f"{h['auc_loso']:.2f}")
@@ -70,9 +70,9 @@ st.warning(
 st.subheader("The leakage demonstration")
 st.markdown(
     f"Same model + features, two epoch-level validation schemes:\n"
-    f"- Leaky random k-fold (subjects bleed across folds): **{l['leaky_accuracy']:.0%}** accuracy\n"
-    f"- Honest subject-wise (GroupKFold): **{l['grouped_accuracy']:.0%}** accuracy\n"
-    f"- Inflation attributable to leakage: **{l['delta_accuracy']:+.0%}**\n\n"
+    f"- Leaky random k-fold (subjects bleed across folds): **{leak['leaky_accuracy']:.0%}** accuracy\n"
+    f"- Honest subject-wise (GroupKFold): **{leak['grouped_accuracy']:.0%}** accuracy\n"
+    f"- Inflation attributable to leakage: **{leak['delta_accuracy']:+.0%}**\n\n"
     "Leakage inflates accuracy in the expected direction. The gap is *modest* here "
     "because our 16 aggregated features have little capacity to memorize individual "
     "subjects — the dramatic ~98%→chance collapses in the literature come from "
