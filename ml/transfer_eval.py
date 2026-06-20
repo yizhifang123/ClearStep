@@ -30,6 +30,7 @@ from ml.preprocess import process_raw
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 log = logging.getLogger("transfer")
+ART = Path("ml/artifacts")
 
 
 def labels_from_participants(root, label_col="group", bdi_col="BDI", bdi_cutoff=7):
@@ -69,6 +70,40 @@ def _read(path: str):
     return mne.io.read_raw_edf(path, preload=True, verbose="ERROR")
 
 
+def evaluate_transfer(model, names, recs, labels) -> dict:
+    """Apply a trained model to labeled external recordings and return metrics."""
+    X, y = [], []
+    for r in recs:
+        if r["subject"] not in labels:
+            continue
+        try:
+            Xe, ns = epoch_feature_matrix(process_raw(_read(r["path"])))
+        except Exception as e:  # noqa: BLE001
+            log.warning("skip %s: %s", r["subject"], e)
+            continue
+        idx = [ns.index(n) for n in names]            # align to the model's feature order
+        X.append(np.nanmean(Xe[:, idx], axis=0))
+        y.append(labels[r["subject"]])
+
+    if not X:
+        raise SystemExit(
+            "No labeled usable recordings after matching participants.tsv to EEG files. "
+            "Verify dataset layout, label columns, and preprocessing compatibility."
+        )
+
+    X, y = np.array(X), np.array(y)
+    if len(np.unique(y)) < 2:
+        raise SystemExit("Transfer evaluation needs at least two label classes.")
+
+    proba = model.predict_proba(X)[:, 1]
+    return {
+        "n": int(len(y)),
+        "n_positive": int(y.sum()),
+        "transfer_auc": float(roc_auc_score(y, proba)),
+        "transfer_accuracy": float(accuracy_score(y, (proba >= 0.5).astype(int))),
+    }
+
+
 def main():
     import joblib  # model.pkl is our own artifact (see app/model_io security note)
 
@@ -84,27 +119,9 @@ def main():
     if not recs:
         raise SystemExit(f"No EEG files under {args.data_root}. See data/download.md.")
 
-    X, y = [], []
-    for r in recs:
-        if r["subject"] not in labels:
-            continue
-        try:
-            Xe, ns = epoch_feature_matrix(process_raw(_read(r["path"])))
-        except Exception as e:  # noqa: BLE001
-            log.warning("skip %s: %s", r["subject"], e)
-            continue
-        idx = [ns.index(n) for n in names]            # align to the model's feature order
-        X.append(np.nanmean(Xe[:, idx], axis=0))
-        y.append(labels[r["subject"]])
-
-    X, y = np.array(X), np.array(y)
-    proba = model.predict_proba(X)[:, 1]
-    out = {
-        "dataset": str(args.data_root), "n": int(len(y)),
-        "transfer_auc": float(roc_auc_score(y, proba)),
-        "transfer_accuracy": float(accuracy_score(y, (proba >= 0.5).astype(int))),
-    }
-    Path("ml/artifacts/transfer.json").write_text(json.dumps(out, indent=2))
+    out = {"dataset": str(args.data_root), **evaluate_transfer(model, names, recs, labels)}
+    ART.mkdir(parents=True, exist_ok=True)
+    (ART / "transfer.json").write_text(json.dumps(out, indent=2))
     log.info("Transfer: n=%d AUC=%.3f acc=%.3f",
              out["n"], out["transfer_auc"], out["transfer_accuracy"])
     print(json.dumps(out, indent=2))

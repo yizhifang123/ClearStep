@@ -18,6 +18,11 @@ def test_faa_sign_convention():
     assert frontal_alpha_asymmetry(np.e, 1.0) < 0
 
 
+def test_faa_handles_zero_or_tiny_power_without_infinities():
+    assert np.isfinite(frontal_alpha_asymmetry(0.0, 1.0))
+    assert np.isfinite(frontal_alpha_asymmetry(1.0, 0.0))
+
+
 def test_bands_and_rois():
     assert list(BANDS) == ["delta", "theta", "alpha", "beta", "gamma"]
     assert BANDS["alpha"] == (8.0, 13.0)

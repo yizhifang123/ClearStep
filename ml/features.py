@@ -16,6 +16,8 @@ from collections import OrderedDict
 import numpy as np
 from mne.time_frequency import psd_array_welch
 
+POWER_EPS = 1e-12
+
 BANDS = OrderedDict([
     ("delta", (1.0, 4.0)),
     ("theta", (4.0, 8.0)),
@@ -38,7 +40,9 @@ def frontal_alpha_asymmetry(alpha_left: float, alpha_right: float) -> float:
     depression-linked direction. (A minority of papers use left-right, flipping
     the sign — hence the explicit test.)
     """
-    return float(np.log(alpha_right) - np.log(alpha_left))
+    left = max(float(alpha_left), POWER_EPS)
+    right = max(float(alpha_right), POWER_EPS)
+    return float(np.log(right) - np.log(left))
 
 
 def _abs_bandpowers(psds, freqs):
@@ -82,7 +86,9 @@ def epoch_feature_matrix(epochs, fmin: float = 1.0, fmax: float = 40.0):
 
     a = absbp["alpha"]                                # (n_ep, n_ch)
     if "F3" in chidx and "F4" in chidx:
-        faa = np.log(a[:, chidx["F4"]]) - np.log(a[:, chidx["F3"]])
+        right = np.clip(a[:, chidx["F4"]], POWER_EPS, None)
+        left = np.clip(a[:, chidx["F3"]], POWER_EPS, None)
+        faa = np.log(right) - np.log(left)
     else:
         faa = np.full(a.shape[0], np.nan)
     cols.append(faa); names.append("faa_F4_F3")

@@ -20,7 +20,14 @@ See `RESEARCH.md` (domain evidence + sources) and `PLAN.md` (scope, architecture
 | ![Real Case](docs/screenshots/03_real_case.png) | ![Illustrative Case](docs/screenshots/04_illustrative_case.png) |
 
 ## Status
-🚧 Phase 2 (build): Layer A pipeline + Layer B dashboard implemented and tested (test suite green). Awaiting the EEG data download to generate the real metrics/figures — the app runs now, and the synthetic workflow is fully functional without it.
+Layer A pipeline + Layer B dashboard are implemented and tested. The repository includes
+lightweight derived artifacts (`data/features/mumtaz_subjects.csv`,
+`ml/artifacts/metrics.json`, figures, and `model.pkl`) so the dashboard runs without
+redistributing raw EEG. Raw EDF files are still excluded; use `data/download.md` only if
+you want to regenerate the artifacts.
+
+External transfer validation is wired but **not run** in this checkout because the
+OpenNeuro fallback dataset is not present locally.
 
 ## Project structure
 See `PLAN.md` §3.
@@ -37,8 +44,14 @@ python3.11 -m venv .venv
 # 2. Data — browser download (see data/download.md); place .edf files in:
 #    data/raw/mumtaz/
 
-# 3. Layer A — train + evaluate (writes metrics, figures, calibrated model)
+# 3. Optional: regenerate Layer A artifacts from raw EEG
 .venv/bin/python -m ml.train --data-root data/raw/mumtaz --condition EC
+
+# Optional: run EC/EO robustness after raw EEG is present
+.venv/bin/python -m ml.robustness --data-root data/raw/mumtaz
+
+# Optional: run external transfer after OpenNeuro ds003478 is present and verified
+.venv/bin/python -m ml.transfer_eval --data-root data/raw/ds003478
 
 # 4. Layer B — clinician dashboard (run from the project root)
 .venv/bin/streamlit run app/Home.py
@@ -47,7 +60,9 @@ python3.11 -m venv .venv
 .venv/bin/python -m pytest -q
 ```
 
-The dashboard runs **without** step 3: Layer A panels show a "run training" hint, and the illustrative (synthetic) workflow works standalone.
+The dashboard runs **without** regeneration because the derived Layer A artifacts are
+checked in. If artifacts are deleted, Layer A panels show a "run training" hint and the
+illustrative synthetic workflow still works.
 
 ## Responsible-AI commitments
 Human-in-the-loop (the clinician decides), visible & calibrated uncertainty, explainability, automatic low-confidence flagging, synthetic-or-licensed data only, and a persistent "not for clinical use" notice. See `PLAN.md` §6.

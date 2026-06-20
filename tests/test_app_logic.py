@@ -11,6 +11,7 @@ from sklearn.preprocessing import StandardScaler
 
 import model_io
 import synthetic
+import ui
 
 
 def test_synthetic_patient_structure_and_determinism():
@@ -42,3 +43,52 @@ def test_feature_contributions_sorted_by_magnitude():
     assert len(contribs) == 4
     mags = [abs(c) for _, c in contribs]
     assert mags == sorted(mags, reverse=True)
+
+
+def test_artifact_loaders_are_independent_of_current_working_directory(monkeypatch, tmp_path):
+    monkeypatch.chdir(tmp_path)
+    metrics = model_io.load_metrics()
+    subjects = model_io.load_subjects()
+
+    assert metrics is not None
+    assert subjects is not None
+    assert {"subject", "label", "oof_proba_mdd"} <= set(subjects.columns)
+
+
+def test_feature_quality_flags_missing_and_outside_reference_range():
+    bundle = {
+        "feature_reference": {
+            "rel_alpha_global": {"p01": 0.1, "p99": 0.5},
+            "rel_beta_global": {"p01": 0.2, "p99": 0.4},
+        }
+    }
+
+    flags = model_io.feature_quality_flags(
+        bundle,
+        ["rel_alpha_global", "rel_beta_global"],
+        [0.7, np.nan],
+    )
+
+    assert flags == [
+        "rel_alpha_global outside training reference range (0.700 vs 0.100-0.500)",
+        "rel_beta_global missing",
+    ]
+
+
+def test_append_decision_returns_timestamped_log_without_mutating_input():
+    before = []
+    after = ui.append_decision(
+        before,
+        case_id="SYN-101",
+        decision="review",
+        now="2026-06-20T10:00:00+00:00",
+    )
+
+    assert before == []
+    assert after == [
+        {
+            "timestamp": "2026-06-20T10:00:00+00:00",
+            "case_id": "SYN-101",
+            "decision": "review",
+        }
+    ]

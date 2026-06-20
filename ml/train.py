@@ -11,9 +11,13 @@ ml/artifacts/.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
+import importlib.metadata as importlib_metadata
 import json
 import logging
 from pathlib import Path
+import platform
+import subprocess
 
 import joblib
 import numpy as np
@@ -21,7 +25,12 @@ import pandas as pd
 
 from ml.features import aggregate_by_subject, epoch_feature_matrix
 from ml.preprocess import LABELS, discover_mumtaz, load_and_preprocess
-from ml.validate import honest_subject_evaluation, leakage_demo, make_pipeline
+from ml.validate import (
+    calibration_cv_for_labels,
+    honest_subject_evaluation,
+    leakage_demo,
+    make_pipeline,
+)
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 log = logging.getLogger("train")
@@ -29,6 +38,78 @@ log = logging.getLogger("train")
 ART = Path("ml/artifacts")
 FIG = ART / "figures"
 FEAT = Path("data/features")
+SCHEMA_VERSION = 2
+PREPROCESSING_PARAMS = {
+    "l_freq": 1.0,
+    "h_freq": 40.0,
+    "notch": [50.0, 100.0],
+    "epoch_len": 2.0,
+    "overlap": 1.0,
+    "reject_uv": 150.0,
+    "do_ica": False,
+}
+
+
+def _package_versions() -> dict[str, str]:
+    packages = ["mne", "numpy", "pandas", "scikit-learn", "scipy", "streamlit"]
+    out = {}
+    for package in packages:
+        try:
+            out[package] = importlib_metadata.version(package)
+        except importlib_metadata.PackageNotFoundError:
+            out[package] = "not-installed"
+    return out
+
+
+def _git_commit() -> str | None:
+    try:
+        res = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=Path(__file__).resolve().parents[1],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except OSError:
+        return None
+    commit = res.stdout.strip()
+    return commit or None
+
+
+def artifact_metadata(condition: str, data_root: str, feature_names: list[str],
+                      preprocessing: dict) -> dict:
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "training": {
+            "dataset": "Mumtaz 2016",
+            "condition": condition,
+            "data_root": data_root,
+            "n_features": len(feature_names),
+        },
+        "preprocessing": preprocessing,
+        "runtime": {
+            "python": platform.python_version(),
+            "packages": _package_versions(),
+            "git_commit": _git_commit(),
+        },
+    }
+
+
+def build_feature_reference(df: pd.DataFrame, feature_names: list[str]) -> dict:
+    """Training distribution summary used for simple OOD/data-quality flags."""
+    reference = {}
+    for name in feature_names:
+        values = pd.to_numeric(df[name], errors="coerce").dropna().to_numpy(float)
+        reference[name] = {
+            "min": float(np.min(values)),
+            "max": float(np.max(values)),
+            "p01": float(np.percentile(values, 1)),
+            "p99": float(np.percentile(values, 99)),
+            "mean": float(np.mean(values)),
+            "std": float(np.std(values, ddof=0)),
+        }
+    return reference
 
 
 def build_feature_table(data_root: str, condition: str, min_epochs: int = 5):
@@ -87,7 +168,9 @@ def main():
 
     honest = honest_subject_evaluation(X_subj, y_subj, n_permutations=args.permutations)
     leak = leakage_demo(X_ep, y_ep, groups)
-    metrics = {"condition": args.condition, "features": names,
+    metadata = artifact_metadata(args.condition, args.data_root, names, PREPROCESSING_PARAMS)
+    metrics = {"schema_version": SCHEMA_VERSION, "condition": args.condition,
+               "features": names, "metadata": metadata,
                "honest_loso": honest, "leakage_demo": leak}
     ART.mkdir(parents=True, exist_ok=True)
     (ART / "metrics.json").write_text(json.dumps(metrics, indent=2))
@@ -106,18 +189,33 @@ def main():
     subj_df.insert(0, "label", y_subj)
     subj_df.insert(0, "subject", order)
     subj_df.to_csv(FEAT / "mumtaz_subjects.csv", index=False)
+    feature_reference = build_feature_reference(subj_df, names)
 
     # final calibrated model for the app + a plain pipeline for coefficient explanations
     from sklearn.calibration import CalibratedClassifierCV
-    from sklearn.model_selection import StratifiedKFold
+    calibration_cv = calibration_cv_for_labels(y_subj, requested_splits=5, random_state=0)
     calibrated = CalibratedClassifierCV(
         make_pipeline(), method="sigmoid",
-        cv=StratifiedKFold(5, shuffle=True, random_state=0))
+        cv=calibration_cv)
     calibrated.fit(X_subj, y_subj)
     plain = make_pipeline().fit(X_subj, y_subj)
-    joblib.dump({"calibrated": calibrated, "plain": plain, "feature_names": names,
-                 "labels": {"0": "HC", "1": "MDD"}, "metrics": metrics},
-                ART / "model.pkl")
+    joblib.dump({
+        "schema_version": SCHEMA_VERSION,
+        "calibrated": calibrated,
+        "plain": plain,
+        "feature_names": names,
+        "feature_reference": feature_reference,
+        "labels": {"0": "HC", "1": "MDD"},
+        "metrics": metrics,
+        "metadata": metadata,
+        "calibration": {
+            "method": "sigmoid",
+            "cv": (
+                f"StratifiedKFold(n_splits={calibration_cv.n_splits}, "
+                "shuffle=True, random_state=0)"
+            ),
+        },
+    }, ART / "model.pkl")
     log.info("Saved model + metrics to %s", ART)
 
     _figures(honest, leak, y_subj, oof)

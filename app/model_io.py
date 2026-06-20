@@ -10,12 +10,18 @@ from pathlib import Path
 
 import numpy as np
 
-ART = Path("ml/artifacts")
-FEAT = Path("data/features")
+REPO_ROOT = Path(__file__).resolve().parents[1]
+ART = REPO_ROOT / "ml/artifacts"
+FEAT = REPO_ROOT / "data/features"
 
 
 def load_metrics():
     p = ART / "metrics.json"
+    return json.loads(p.read_text()) if p.exists() else None
+
+
+def load_transfer():
+    p = ART / "transfer.json"
     return json.loads(p.read_text()) if p.exists() else None
 
 
@@ -52,3 +58,26 @@ def feature_contributions(plain_pipeline, feature_names, x_row):
     contrib = clf.coef_[0] * xs
     order = np.argsort(np.abs(contrib))[::-1]
     return [(feature_names[i], float(contrib[i])) for i in order]
+
+
+def feature_quality_flags(model_bundle, feature_names, x_row) -> list[str]:
+    """Flag missing or out-of-training-reference features before model use."""
+    reference = model_bundle.get("feature_reference") or {}
+    flags: list[str] = []
+    for name, value in zip(feature_names, x_row):
+        try:
+            v = float(value)
+        except (TypeError, ValueError):
+            flags.append(f"{name} missing")
+            continue
+        if not np.isfinite(v):
+            flags.append(f"{name} missing")
+            continue
+        ref = reference.get(name)
+        if not ref:
+            continue
+        lo = float(ref["p01"])
+        hi = float(ref["p99"])
+        if v < lo or v > hi:
+            flags.append(f"{name} outside training reference range ({v:.3f} vs {lo:.3f}-{hi:.3f})")
+    return flags

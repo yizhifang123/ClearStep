@@ -12,6 +12,14 @@ import streamlit as st
 import model_io
 from ui import banner
 
+
+def _ci_text(metrics: dict, key: str) -> str | None:
+    ci = metrics.get("metric_ci_95", {}).get(key)
+    if not ci:
+        return None
+    return f"{ci[0]:.2f}-{ci[1]:.2f}"
+
+
 st.set_page_config(page_title="Model card", page_icon="📋", layout="wide")
 banner()
 st.title("📋 Model card & limitations")
@@ -39,8 +47,19 @@ m4.metric("Specificity", f"{h['specificity']:.0%}")
 st.caption(f"n={h['n_subjects']} subjects ({h['n_mdd']} MDD). Permutation test "
            f"p={h['permutation_pvalue']:.3f} (chance AUC = 0.50). "
            f"Resting condition: {metrics['condition']}.")
+ci_bits = [
+    f"AUC {_ci_text(h, 'auc_loso')}",
+    f"accuracy {_ci_text(h, 'accuracy_loso')}",
+    f"sensitivity {_ci_text(h, 'sensitivity')}",
+    f"specificity {_ci_text(h, 'specificity')}",
+]
+if h.get("metric_ci_95"):
+    st.caption("Subject-bootstrap 95% intervals: " + "; ".join(ci_bits) + ".")
+if h.get("permutation_cv"):
+    st.caption(f"Permutation CV: {h['permutation_cv']}. {h.get('permutation_note', '')}")
 st.warning(
-    "**High accuracy ≠ clinical utility.** This is *correctly* validated (subject-wise + "
+    "**High accuracy ≠ clinical utility.** This is validated without known subject-level "
+    "leakage in this dataset (subject-wise + "
     "permutation p < 0.01), but Mumtaz is a small, single-site, adult dataset known to "
     "over-separate. The classifier is driven mainly by **relative beta power** (see "
     "drivers below) — which can reflect cortical hyperarousal *or* a non-neural confound "
@@ -86,6 +105,9 @@ if model is not None:
     st.caption("Relative **beta** power dominates; frontal alpha asymmetry contributes "
                "little — consistent with FAA being a near-null biomarker. Beta-driven "
                "separation is exactly why the confound caveat above matters.")
+    if model.get("calibration"):
+        st.caption(f"App model calibration: {model['calibration']['method']} via "
+                   f"{model['calibration']['cv']}.")
 
 rob_path = Path("ml/artifacts/robustness.json")
 if rob_path.exists():
@@ -101,6 +123,21 @@ if rob_path.exists():
     st.caption("The MDD-vs-HC signal persists across both resting conditions (a good "
                "robustness sign) — though a *stable* confound (site/acquisition) would "
                "also be condition-robust, so this does not rule one out.")
+
+transfer = model_io.load_transfer()
+st.subheader("External transfer validation")
+if transfer:
+    t1, t2, t3 = st.columns(3)
+    t1.metric("External n", transfer["n"])
+    t2.metric("Transfer AUC", f"{transfer['transfer_auc']:.2f}")
+    t3.metric("Transfer accuracy", f"{transfer['transfer_accuracy']:.0%}")
+    st.caption(f"Dataset: {transfer.get('dataset', 'external cohort')}. "
+               "This is the strongest generalization check and should be expected "
+               "to drop versus in-dataset Mumtaz performance.")
+else:
+    st.info("Not run yet. Download OpenNeuro ds003478 and run "
+            "`.venv/bin/python -m ml.transfer_eval --data-root data/raw/ds003478` "
+            "after verifying its BIDS labels and EEG file layout.")
 
 st.subheader("Key limitations (honest)")
 st.markdown(

@@ -1,6 +1,8 @@
 """Layer B — shared Streamlit UI components. Research prototype; NOT for clinical use."""
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 import streamlit as st
 
 DISCLAIMER = (
@@ -49,9 +51,16 @@ def contributions_chart(contribs, top: int = 8):
                "Linear model: coefficient × standardized feature value.")
 
 
+def append_decision(log, case_id: str, decision: str, now: str | None = None) -> list[dict]:
+    """Return a new decision log with one timestamped clinician action appended."""
+    timestamp = now or datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return [*log, {"timestamp": timestamp, "case_id": case_id, "decision": decision}]
+
+
 def hitl_controls(case_id: str):
     """Human-in-the-loop: the tool suggests; the clinician confirms/overrides/escalates."""
     st.markdown("**The clinician decides — the tool only suggests.**")
+    st.session_state.setdefault("decision_log", [])
     c1, c2, c3 = st.columns(3)
     decision = None
     if c1.button("✅ Confirm suggestion", key=f"confirm_{case_id}"):
@@ -61,7 +70,21 @@ def hitl_controls(case_id: str):
     if c3.button("🔬 Request human review", key=f"review_{case_id}"):
         decision = "review"
     if decision:
+        st.session_state["decision_log"] = append_decision(
+            st.session_state["decision_log"], case_id, decision)
         st.success(f"Recorded clinician action: **{decision}** (demo — not persisted).")
+    if st.session_state["decision_log"]:
+        import pandas as pd
+
+        df = pd.DataFrame(st.session_state["decision_log"])
+        with st.expander("Session action log", expanded=False):
+            st.dataframe(df, hide_index=True)
+            st.download_button(
+                "Download action log",
+                df.to_csv(index=False).encode("utf-8"),
+                file_name="clinician_action_log.csv",
+                mime="text/csv",
+            )
     return decision
 
 

@@ -46,6 +46,9 @@ with left:
 with right:
     st.subheader("Why — feature contributions")
     x_row = [float(row[f]) for f in feature_names]
+    flags = model_io.feature_quality_flags(model, feature_names, x_row)
+    if flags:
+        st.warning("Data-quality / OOD flags: " + "; ".join(flags[:5]))
     contribs = model_io.feature_contributions(model["plain"], feature_names, x_row)
     contributions_chart(contribs)
 

@@ -9,6 +9,7 @@ Usage: .venv/bin/python -m ml.robustness
 """
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 from pathlib import Path
@@ -26,6 +27,10 @@ ART = Path("ml/artifacts")
 
 def features_for_condition(data_root, condition, min_epochs=5):
     recs = [r for r in discover_mumtaz(data_root) if r["condition"] == condition]
+    if not recs:
+        raise SystemExit(
+            f"No EDF files for condition={condition} under {data_root}. See data/download.md."
+        )
     rows, subjects, labels = [], [], []
     for r in recs:
         try:
@@ -39,6 +44,10 @@ def features_for_condition(data_root, condition, min_epochs=5):
         rows.append(X)
         subjects += [r["subject"]] * len(X)
         labels += [LABELS[r["label"]]] * len(X)
+    if not rows:
+        raise SystemExit(
+            f"No usable recordings for condition={condition} under {data_root} after preprocessing."
+        )
     Xep = np.vstack(rows)
     groups = np.array(subjects)
     Xs, order = aggregate_by_subject(Xep, groups)
@@ -48,12 +57,16 @@ def features_for_condition(data_root, condition, min_epochs=5):
 
 
 def main():
-    data_root = "data/raw/mumtaz"
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--data-root", default="data/raw/mumtaz")
+    ap.add_argument("--permutations", type=int, default=500)
+    args = ap.parse_args()
+
     out = {}
     for cond in ("EC", "EO"):
         log.info("=== condition %s ===", cond)
-        Xep, yep, groups, Xs, ys = features_for_condition(data_root, cond)
-        honest = honest_subject_evaluation(Xs, ys, n_permutations=500)
+        Xep, yep, groups, Xs, ys = features_for_condition(args.data_root, cond)
+        honest = honest_subject_evaluation(Xs, ys, n_permutations=args.permutations)
         leak = leakage_demo(Xep, yep, groups)
         out[cond] = {
             "n_subjects": int(len(ys)), "n_mdd": int(ys.sum()),
@@ -64,6 +77,7 @@ def main():
         }
         log.info("%s: AUC=%.3f acc=%.3f (p=%.3f)", cond,
                  honest["auc_loso"], honest["accuracy_loso"], honest["permutation_pvalue"])
+    ART.mkdir(parents=True, exist_ok=True)
     (ART / "robustness.json").write_text(json.dumps(out, indent=2))
     print(json.dumps(out, indent=2))
 

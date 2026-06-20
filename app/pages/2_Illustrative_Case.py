@@ -66,8 +66,16 @@ st.warning("Subtype leaning here comes from a single illustrative cortisol mappi
 model = model_io.load_model()
 if model is not None:
     x = patient.eeg_vector(model["feature_names"])
+    flags = model_io.feature_quality_flags(model, model["feature_names"], x)
     p_mdd = float(model["calibrated"].predict_proba([x])[0, 1])
     st.subheader("MDD-vs-HC model applied to the synthetic EEG")
+    if flags:
+        st.warning(
+            "Synthetic EEG is outside the Layer A training reference range for "
+            f"{len(flags)} feature(s). Treat this model score as off-distribution."
+        )
+        with st.expander("Feature range flags", expanded=False):
+            st.write(flags)
     uncertainty_panel(p_mdd, label="P(MDD) — Layer A model on SYNTHETIC input")
     st.caption("Illustrative: the model was trained on adults; applying it to a synthetic "
                "adolescent case demonstrates the workflow only.")
