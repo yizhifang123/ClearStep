@@ -44,9 +44,13 @@ elevated EEG signal"** selected.
 
 **On screen:** the running app.
 
-> "Here it is. I'll pick a synthetic patient — all our data is synthetic, no real
-> patients. You can see the inputs: the brainwave bands, the cortisol panel. I click
-> *Run AI analysis.*
+> "Here it is. I'll pick a patient — Jordan, fifteen — all synthetic, no real patients.
+> You can see the inputs: the brainwave bands, the cortisol panel. And here's a physician
+> note — also synthetic; we never use real records — full of terms like *'anhedonia'* and
+> *'PHQ-A 16.'* I click *Run AI analysis.*
+>
+> Behind the scenes, a second retrieval step reads that note and grounds the explanation in
+> it — you can even see the exact lines it used.
 >
 > The model gives its signal — here, an elevated probability, but notice it shows the
 > *confidence* and the validation range right away: this model scores well on one small
