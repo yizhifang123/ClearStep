@@ -1,13 +1,13 @@
 """MindBridge — a two-audience depression decision-support prototype.
 
 One flow, two readers:
-  • Clinician: synthetic EEG + hormone data -> a REAL trained EEG model gives a
+  - Clinician: synthetic EEG + hormone data -> a REAL trained EEG model gives a
     calibrated, uncertainty-aware signal, plus guideline evidence to weigh (RAG).
-  • Family: the same workup, turned into plain language + what-matters + next steps
-    + trusted support resources — help that is normally locked behind jargon.
+  - Family: the same workup, turned into plain language + what-matters + next steps
+    + trusted support resources -- help that is normally locked behind jargon.
 
 Built for the USAII Global AI Hackathon 2026 (HS Challenge 1: "Help is Hard to Find").
-Synthetic data only. Not a medical device. Decision SUPPORT — the clinician decides.
+Synthetic data only. Not a medical device. Decision SUPPORT -- the clinician decides.
 """
 
 import streamlit as st
@@ -16,14 +16,14 @@ from dotenv import load_dotenv
 load_dotenv()  # read mindbridge/.env so an API key there is picked up automatically
 
 from llm import NoKeyError, explain  # noqa: E402
-from model_engine import DEMO_CASES, analyze_patient
-from rag import (
+from model_engine import DEMO_CASES, analyze_patient  # noqa: E402
+from rag import (  # noqa: E402
     guideline_retriever,
     guidelines_block,
     resource_retriever,
     resources_block,
 )
-from synthetic import ARCHETYPES, archetype_label
+from synthetic import ARCHETYPES, archetype_label  # noqa: E402
 
 BANDS = ["delta", "theta", "alpha", "beta", "gamma"]
 
@@ -34,20 +34,13 @@ def retrievers():
 
 
 def disclaimer():
-    st.warning(
-        "⚠️ **Research prototype — not a medical device, not for clinical use.** All "
-        "patients here are **synthetic**. The AI gives **decision support**, never a "
-        "diagnosis or prescription — a clinician decides. The EEG model was trained on "
-        "**adults**; adolescents are off-distribution.",
-        icon="⚠️",
-    )
-
-
-def crisis_banner():
     st.markdown(
-        """<div style="background:#991b1b;color:white;padding:10px 14px;border-radius:8px;">
-        <b>In crisis right now?</b> Call or text <b>988</b> (Suicide &amp; Crisis Lifeline)
-        or text <b>HOME to 741741</b>. If someone is unsafe, call 911.</div>""",
+        """<div style="background:#f1f5f9;border-left:4px solid #2563eb;padding:10px 14px;
+        border-radius:6px;font-size:0.9rem;line-height:1.45;">
+        <b>Research prototype — not a medical device, not for clinical use.</b> All
+        patients here are <b>synthetic</b>. The AI gives <b>decision support</b>, never a
+        diagnosis or prescription — a clinician decides. The EEG model was trained on
+        <b>adults</b>; adolescents are off-distribution.</div>""",
         unsafe_allow_html=True,
     )
 
@@ -81,7 +74,7 @@ def signal_card(result):
         with MDD vs. healthy controls (real trained model)</div>
         <div style="font-size:2rem;font-weight:700;color:{color};">P = {p:.2f}</div>
         <div>Confidence: <b>{result['confidence']}</b>
-        {'· ⚠️ inside low-confidence band' if lo <= p <= hi else ''}</div>
+        {'· inside low-confidence band' if lo <= p <= hi else ''}</div>
         </div>""",
         unsafe_allow_html=True,
     )
@@ -93,7 +86,7 @@ def signal_card(result):
         f"n={m['n_subjects']} adults. High accuracy on one small dataset ≠ clinical utility."
     )
     if result["ood_flags"]:
-        with st.expander(f"⚠️ {len(result['ood_flags'])} feature(s) outside training range (OOD)"):
+        with st.expander(f"{len(result['ood_flags'])} feature(s) outside training range (OOD)"):
             for f in result["ood_flags"]:
                 st.markdown(f"- {f}")
 
@@ -108,8 +101,8 @@ def clinician_view(out, guides):
     if c.get("safety_flags"):
         st.markdown("**Safety checks:**")
         for s in c["safety_flags"]:
-            st.markdown(f"- 🛡️ {s}")
-    st.info(f"🔒 {c['caveat']}")
+            st.markdown(f"- {s}")
+    st.info(c["caveat"])
 
 
 def family_view(out, res_retriever):
@@ -140,8 +133,8 @@ def _res_card(r):
 
 
 def main():
-    st.set_page_config(page_title="MindBridge", page_icon="🧠", layout="centered")
-    st.title("🧠 MindBridge")
+    st.set_page_config(page_title="MindBridge", layout="centered")
+    st.title("MindBridge")
     st.markdown(
         "**The gap we close:** a clinician runs a mental-health workup, but the family "
         "is left with jargon they can't act on. MindBridge turns one depression "
@@ -157,13 +150,12 @@ def main():
     with st.expander("…or build a custom synthetic patient"):
         seed = st.number_input("Seed", value=int(seed), step=1)
         arch = st.selectbox("Archetype", ARCHETYPES, index=ARCHETYPES.index(arch))
-        st.caption("Custom patients need an ANTHROPIC_API_KEY for the written output.")
 
     result = analyze_patient(int(seed), arch)
     st.markdown("### 2. Synthetic inputs")
     show_inputs(result["patient"])
 
-    if st.button("🤖 Run AI analysis", type="primary", use_container_width=True):
+    if st.button("Run AI analysis", type="primary", use_container_width=True):
         with st.spinner("Running the EEG model and grounding in guidelines…"):
             st.markdown("### 3. Model signal")
             signal_card(result)
@@ -192,8 +184,7 @@ def main():
             st.caption("Demo mode: written output is cached (no API key). The model signal above is live.")
 
         st.markdown("### 4. Two audiences, one analysis")
-        crisis_banner()
-        tab_c, tab_f = st.tabs(["👩‍⚕️ Clinician view", "👨‍👩‍👧 Family view (plain language)"])
+        tab_c, tab_f = st.tabs(["Clinician view", "Family view (plain language)"])
         with tab_c:
             clinician_view(out, guides)
         with tab_f:
@@ -206,11 +197,11 @@ def main():
         d1, d2, d3 = st.columns(3)
         if "log" not in st.session_state:
             st.session_state.log = []
-        if d1.button("✅ Reviewed — agree", use_container_width=True):
+        if d1.button("Reviewed — agree", use_container_width=True):
             st.session_state.log.append(f"{pat['case_id']}: clinician agreed with support")
-        if d2.button("✏️ Override", use_container_width=True):
+        if d2.button("Override", use_container_width=True):
             st.session_state.log.append(f"{pat['case_id']}: clinician overrode AI support")
-        if d3.button("🔎 Needs more review", use_container_width=True):
+        if d3.button("Needs more review", use_container_width=True):
             st.session_state.log.append(f"{pat['case_id']}: flagged for further review")
         for entry in st.session_state.log[-5:]:
             st.markdown(f"- {entry}")
