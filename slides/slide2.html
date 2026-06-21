@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  h1{ margin-bottom:54px; }
+  .pipe{ display:flex; align-items:stretch; gap:0; flex:1; }
+  .card{ flex:1; border:2px solid var(--ink); border-radius:6px; padding:30px 30px; display:flex; flex-direction:column; }
+  .num{ width:46px; height:46px; border-radius:50%; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:22px; margin-bottom:22px; }
+  .card h3{ font-size:27px; font-weight:800; letter-spacing:-.01em; margin-bottom:12px; }
+  .card .d{ font-size:18px; color:var(--d2); line-height:1.5; }
+  .card .d b{ color:var(--ink); font-weight:800; }
+  .arrow{ width:78px; display:flex; align-items:center; justify-content:center; }
+  .arrow svg{ width:44px; height:44px; }
+  .out{ flex:1; display:flex; flex-direction:column; gap:18px; justify-content:center; }
+  .obox{ border:2px solid var(--ink); border-radius:6px; padding:20px 22px; }
+  .obox.fam{ border-style:dashed; }
+  .obox .ot{ font-weight:800; font-size:21px; }
+  .obox .od{ font-size:16px; color:var(--d2); margin-top:6px; line-height:1.45; }
+  .obox .od b{ color:var(--ink); }
+</style></head>
+<body><div class="slide">
+  <h1>From raw brainwaves to an answer<br><span class="lt">nothing makes up.</span></h1>
+  <div class="pipe">
+    <div class="card">
+      <div class="num">1</div>
+      <h3>Read the signal</h3>
+      <div class="d">An ML model trained on <b>public EEG data</b> compares brainwave features to patterns seen in depression — and reports its <b>uncertainty</b>.</div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+    <div class="card">
+      <div class="num">2</div>
+      <h3>Ground it in evidence</h3>
+      <div class="d">A <b>retrieval</b> step pulls matching clinical guidelines, support resources, and patient records from <b>curated sources</b> — so nothing is hallucinated.</div>
+    </div>
+    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>
+    <div class="out">
+      <div class="obox"><div class="ot">For the clinician</div><div class="od">A summary where <b>every point cites a guideline</b>.</div></div>
+      <div class="obox fam"><div class="ot">For the family</div><div class="od">The same evidence in <b>plain language</b>, with clear next steps.</div></div>
+    </div>
+  </div>
+</div></body></html>

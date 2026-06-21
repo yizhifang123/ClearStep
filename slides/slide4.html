@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css">
+<style>
+  h1{ margin-bottom:40px; }
+  .demo{ display:flex; gap:36px; flex:1; }
+  .col{ display:flex; flex-direction:column; gap:16px; }
+  .col.a{ flex:.85; } .col.b{ flex:1.2; }
+  .ui{ border:2px solid var(--ink); border-radius:6px; padding:16px 20px; }
+  .ui .lab{ font-size:13px; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:var(--mut); margin-bottom:10px; }
+  .pick{ display:flex; align-items:center; justify-content:space-between; }
+  .pick .who{ font-weight:800; font-size:24px; }
+  .pick .chev{ font-weight:800; font-size:18px; }
+  .note{ font-size:16px; line-height:1.45; font-style:italic; color:var(--d1); }
+  .vit{ display:flex; justify-content:space-between; font-size:16px; padding:7px 0; border-bottom:1px solid var(--hair); }
+  .vit:last-child{ border:0; } .vit .k{ color:var(--d2); font-weight:600; } .vit .v{ font-weight:800; font-variant-numeric:tabular-nums; }
+  .runbtn{ border:2px solid var(--ink); background:var(--ink); color:#fff; font-weight:800; font-size:17px; text-align:center; padding:14px; border-radius:6px; }
+  .res{ border:2px solid var(--ink); border-radius:6px; padding:24px 26px; flex:1; display:flex; flex-direction:column; }
+  .conf{ border-bottom:2px solid var(--ink); padding-bottom:18px; margin-bottom:18px; }
+  .conf .top{ display:flex; justify-content:space-between; align-items:baseline; }
+  .conf .top .t{ font-size:14px; font-weight:800; text-transform:uppercase; letter-spacing:.05em; color:var(--mut); }
+  .conf .top .pct{ font-size:46px; font-weight:900; letter-spacing:-.02em; }
+  .conf .bar{ height:14px; border:2px solid var(--ink); border-radius:999px; overflow:hidden; margin-top:12px; }
+  .conf .bar i{ display:block; height:100%; width:64%; background:var(--ink); }
+  .conf .sub{ font-size:14px; color:var(--d2); margin-top:9px; font-weight:600; }
+  .tabs{ display:flex; gap:10px; margin-bottom:16px; }
+  .t1{ flex:1; text-align:center; font-weight:800; font-size:16px; padding:11px; border-radius:6px; border:2px solid var(--ink); }
+  .t1.on{ background:var(--ink); color:#fff; }
+  .t1.off{ color:var(--mut); border-color:var(--line); }
+  .fview .h{ font-weight:800; font-size:18px; margin-bottom:8px; }
+  .fview p{ font-size:16px; line-height:1.45; color:var(--d1); margin-bottom:14px; }
+  .fview p b{ font-weight:800; color:var(--ink); }
+  .steps .s{ font-size:16px; color:var(--d1); margin-bottom:9px; display:flex; gap:9px; }
+  .steps .s:last-child{ margin-bottom:0; } .steps .s .n{ font-weight:800; }
+</style></head>
+<body><div class="slide">
+  <h1>Pick a patient, run the analysis,<br><span class="lt">read both views.</span></h1>
+  <div class="demo">
+    <div class="col a">
+      <div class="ui">
+        <div class="lab">1 · Patient</div>
+        <div class="pick"><span class="who">Sam, 16</span><span class="chev">▾</span></div>
+      </div>
+      <div class="ui">
+        <div class="lab">2 · Behavior note</div>
+        <div class="note">"Increasingly irritable; avoiding school for ~3 weeks. Withdrawn from friends."</div>
+      </div>
+      <div class="ui">
+        <div class="lab">3 · Brainwaves + hormones</div>
+        <div class="vit"><span class="k">Frontal alpha asymmetry</span><span class="v">−0.42</span></div>
+        <div class="vit"><span class="k">Theta / beta ratio</span><span class="v">3.1</span></div>
+        <div class="vit"><span class="k">Salivary cortisol</span><span class="v">21.4</span></div>
+      </div>
+      <div class="runbtn">▶  Run analysis</div>
+    </div>
+    <div class="col b">
+      <div class="res">
+        <div class="conf">
+          <div class="top"><span class="t">Depression confidence</span><span class="pct">64%</span></div>
+          <div class="bar"><i></i></div>
+          <div class="sub">Moderate — from Sam's brainwave signal, with its uncertainty.</div>
+        </div>
+        <div class="tabs"><div class="t1 on">Family view</div><div class="t1 off">Clinician view</div></div>
+        <div class="fview">
+          <div class="h">What's happening, in plain words</div>
+          <p>Sam's brain activity and stress hormones <b>match patterns often linked to depression</b>. The school avoidance and irritability fit the same picture.</p>
+          <div class="steps">
+            <div class="s"><span class="n">1.</span> Book a follow-up with Sam's clinician this week.</div>
+            <div class="s"><span class="n">2.</span> Use these vetted support resources for families.</div>
+            <div class="s"><span class="n">3.</span> Watch for the listed warning signs.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></body></html>
