@@ -1,9 +1,10 @@
-"""The generation step: ask Claude to translate the document into the structured
-plain-language result — or, with no API key, fall back to a cached demo result
-so the app (and a demo video) always works.
+"""The generation step: ask a language model to translate the document into the
+structured plain-language result — or, with no API key, fall back to a cached demo
+result so the app (and a demo video) always works.
 
-Capabilities used here: NLP understanding, summarization, classification
-(urgency), and grounded generation over the retrieved resources.
+Provider-agnostic: set ANY ONE of ANTHROPIC_API_KEY / OPENAI_API_KEY / GEMINI_API_KEY.
+Capabilities used here: NLP understanding, summarization, classification (urgency),
+and grounded generation over the retrieved resources.
 """
 
 import json
@@ -11,26 +12,49 @@ import os
 
 from prompts import SYSTEM_PROMPT, build_user_message
 
-DEFAULT_MODEL = os.environ.get("CLEARSTEP_MODEL", "claude-sonnet-4-6")
-
 
 class NoKeyError(Exception):
-    """Raised when custom text is submitted but no API key is configured."""
+    """Raised when custom text is submitted but no provider API key is configured."""
 
 
-def _api_key():
-    return os.environ.get("ANTHROPIC_API_KEY")
+# Set MINDBRIDGE-style any-one-key. Force a provider with CLEARSTEP_PROVIDER.
+_PROVIDER_KEYS = {
+    "anthropic": ("ANTHROPIC_API_KEY",),
+    "openai": ("OPENAI_API_KEY",),
+    "gemini": ("GEMINI_API_KEY", "GOOGLE_API_KEY"),
+}
+_DEFAULT_MODELS = {
+    "anthropic": "claude-sonnet-4-6",
+    "openai": "gpt-4o",
+    "gemini": "gemini-2.5-flash",
+}
+
+
+def _detect_provider():
+    forced = os.environ.get("CLEARSTEP_PROVIDER")
+    order = [forced] if forced else ["anthropic", "openai", "gemini"]
+    for name in order:
+        for k in _PROVIDER_KEYS.get(name, ()):
+            if os.environ.get(k):
+                return name, os.environ[k]
+    return None, None
+
+
+def _model_for(provider):
+    return os.environ.get("CLEARSTEP_MODEL", _DEFAULT_MODELS[provider])
 
 
 def analyze(document_text: str, resources_block: str, example_key: str | None = None):
     """Return the structured analysis dict for a document.
 
-    With an API key: a live Claude call. Without one: the cached demo result for a
-    bundled example, if available. Raises NoKeyError for custom text with no key.
+    With any provider key: a live model call. Without one: the cached demo result for
+    a bundled example, if available. Raises NoKeyError for custom text with no key.
     """
-    if _api_key():
-        result = _analyze_live(document_text, resources_block)
+    provider, key = _detect_provider()
+    if key:
+        result = _analyze_live(provider, key, document_text, resources_block)
         result["mode"] = "live"
+        result["provider"] = provider
         return result
 
     if example_key and example_key in DEMO_RESPONSES:
@@ -39,29 +63,49 @@ def analyze(document_text: str, resources_block: str, example_key: str | None = 
         return result
 
     raise NoKeyError(
-        "No ANTHROPIC_API_KEY found. Live analysis of custom text needs a key — "
-        "or try one of the built-in example documents, which run in demo mode."
+        "No API key found. Live analysis of custom text needs one of ANTHROPIC_API_KEY, "
+        "OPENAI_API_KEY, or GEMINI_API_KEY — or try a built-in example (runs key-free)."
     )
 
 
-def _analyze_live(document_text: str, resources_block: str) -> dict:
-    """Call Claude and parse the structured JSON it returns."""
-    import anthropic
+def _analyze_live(provider, key, document_text, resources_block) -> dict:
+    """Dispatch the same prompt to whichever provider's key is configured."""
+    user = build_user_message(document_text, resources_block)
+    model = _model_for(provider)
 
-    client = anthropic.Anthropic(api_key=_api_key())
-    message = client.messages.create(
-        model=DEFAULT_MODEL,
-        max_tokens=1500,
-        temperature=0.2,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {
-                "role": "user",
-                "content": build_user_message(document_text, resources_block),
-            }
-        ],
-    )
-    text = "".join(block.text for block in message.content if block.type == "text")
+    if provider == "anthropic":
+        import anthropic
+        client = anthropic.Anthropic(api_key=key)
+        msg = client.messages.create(
+            model=model, max_tokens=1500, temperature=0.2, system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user}],
+        )
+        text = "".join(b.text for b in msg.content if b.type == "text")
+
+    elif provider == "openai":
+        from openai import OpenAI
+        client = OpenAI(api_key=key)
+        resp = client.chat.completions.create(
+            model=model, temperature=0.2, response_format={"type": "json_object"},
+            messages=[{"role": "system", "content": SYSTEM_PROMPT},
+                      {"role": "user", "content": user}],
+        )
+        text = resp.choices[0].message.content
+
+    elif provider == "gemini":
+        import google.generativeai as genai
+        # transport="rest" avoids a gRPC "Event loop is closed" error inside Streamlit.
+        genai.configure(api_key=key, transport="rest")
+        gm = genai.GenerativeModel(model, system_instruction=SYSTEM_PROMPT)
+        resp = gm.generate_content(
+            user, generation_config={"temperature": 0.2,
+                                     "response_mime_type": "application/json"},
+        )
+        text = resp.text
+
+    else:
+        raise NoKeyError(f"Unknown provider: {provider}")
+
     return _parse_json(text)
 
 
@@ -161,5 +205,50 @@ DEMO_RESPONSES = {
             "Withdrawing from friends and activities much more than usual"
         ],
         "resource_ids": ["988", "crisis-text", "findtreatment", "211", "nami", "jed"]
+    },
+    "insurance_denial": {
+        "urgency": "routine",
+        "urgency_reason": "You have up to 180 days to appeal and there is no emergency — "
+        "but this denial can be challenged, and it's worth acting well before the deadline.",
+        "summary": "Your insurance said no to paying for 8 therapy sessions, calling them "
+        "'not medically necessary.' That is a common denial, and you have the right to "
+        "appeal it. If it stands, you could owe $1,240 — but many denials like this get "
+        "overturned once the provider sends more documentation.",
+        "key_points": [
+            "This is a DENIAL you can fight — not a final bill. You have 180 days to "
+            "appeal in writing.",
+            "The reason given is 'not medically necessary' and that the records didn't "
+            "show a lower level of care was tried first.",
+            "Your therapist can send extra documentation to support medical necessity — "
+            "ask them to help with the appeal.",
+            "If a delay would seriously harm the patient's health, you can request an "
+            "EXPEDITED (faster) appeal.",
+            "If the internal appeal fails, you can ask for an external review by an "
+            "Independent Review Organization (IRO)."
+        ],
+        "checklist": [
+            {"step": "Call Member Services (number on the insurance card) and say you "
+             "want to file an internal appeal.", "timeframe": "this week",
+             "why": "Starts the appeal and confirms exactly what they need."},
+            {"step": "Ask your therapist/provider to write a letter of medical necessity "
+             "and send their records.", "timeframe": "within a week or two",
+             "why": "Provider documentation is what overturns most of these denials."},
+            {"step": "Submit the written appeal before the 180-day deadline; keep copies "
+             "of everything.", "timeframe": "before the deadline (sooner is better)",
+             "why": "Miss the window and you lose the right to appeal."},
+            {"step": "If the patient's health can't wait, request an EXPEDITED appeal.",
+             "timeframe": "right away if needed", "why": "Expedited appeals are decided "
+             "much faster."},
+            {"step": "Call 211 or NAMI for help understanding the process or finding "
+             "lower-cost care meanwhile.", "timeframe": "as needed",
+             "why": "They help families navigate insurance and find affordable options."}
+        ],
+        "watch_for": [
+            "If the teen's mental health gets worse while you wait — don't let the "
+            "insurance fight delay care; call 988 or seek help",
+            "Any sign of self-harm or crisis — that's an emergency, separate from the "
+            "insurance issue"
+        ],
+        "resource_ids": ["988", "crisis-text", "211", "nami", "findtreatment"]
     }
 }

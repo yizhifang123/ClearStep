@@ -7,7 +7,11 @@
     "source": "U.S. Substance Abuse and Mental Health Services Administration (SAMHSA)",
     "always_show": true,
     "tags": "suicide crisis emergency self-harm safety immediate help hotline 24/7 free confidential mental health",
-    "description": "Free, confidential, 24/7 support for people in suicidal crisis or emotional distress. Call or text 988 anytime to reach a trained crisis counselor."
+    "description": "Free, confidential, 24/7 support for people in suicidal crisis or emotional distress. Call or text 988 anytime to reach a trained crisis counselor.",
+    "run_by": "SAMHSA (U.S. government)",
+    "free": true,
+    "confidential": true,
+    "availability": "24/7"
   },
   {
     "id": "crisis-text",
@@ -17,7 +21,11 @@
     "source": "Crisis Text Line (nonprofit)",
     "always_show": true,
     "tags": "crisis text message anxiety panic self-harm overwhelmed teen youth 24/7 free confidential support",
-    "description": "Free, 24/7 text-based crisis support. Text HOME to 741741 to message a trained volunteer crisis counselor."
+    "description": "Free, 24/7 text-based crisis support. Text HOME to 741741 to message a trained volunteer crisis counselor.",
+    "run_by": "Crisis Text Line (nonprofit)",
+    "free": true,
+    "confidential": true,
+    "availability": "24/7"
   },
   {
     "id": "samhsa-helpline",
@@ -27,7 +35,11 @@
     "source": "U.S. Substance Abuse and Mental Health Services Administration (SAMHSA)",
     "always_show": false,
     "tags": "treatment referral mental health substance use free confidential 24/7 find a provider outpatient connect to care",
-    "description": "Free, confidential 24/7 treatment referral and information service for individuals and families facing mental health or substance use disorders. Connects you to local treatment and support."
+    "description": "Free, confidential 24/7 treatment referral and information service for individuals and families facing mental health or substance use disorders. Connects you to local treatment and support.",
+    "run_by": "SAMHSA (U.S. government)",
+    "free": true,
+    "confidential": true,
+    "availability": "24/7"
   },
   {
     "id": "findtreatment",
@@ -37,7 +49,11 @@
     "source": "U.S. Substance Abuse and Mental Health Services Administration (SAMHSA)",
     "always_show": false,
     "tags": "find a therapist outpatient behavioral health treatment locator clinic provider follow-up appointment insurance",
-    "description": "A confidential, anonymous government tool to find local mental health and substance use treatment providers, filterable by location, services, and payment options."
+    "description": "A confidential, anonymous government tool to find local mental health and substance use treatment providers, filterable by location, services, and payment options.",
+    "run_by": "SAMHSA (U.S. government)",
+    "free": true,
+    "confidential": true,
+    "availability": "Online, anytime"
   },
   {
     "id": "211",
@@ -47,7 +63,11 @@
     "source": "United Way Worldwide",
     "always_show": false,
     "tags": "local resources food housing rent utilities transportation navigation community services insurance help nearby support",
-    "description": "Free, confidential service connecting people to local resources: counseling, food, housing, financial help, transportation to appointments, and more. Call or text 211."
+    "description": "Free, confidential service connecting people to local resources: counseling, food, housing, financial help, transportation to appointments, and more. Call or text 211.",
+    "run_by": "United Way",
+    "free": true,
+    "confidential": true,
+    "availability": "24/7 in most areas"
   },
   {
     "id": "nami",
@@ -57,7 +77,11 @@
     "source": "National Alliance on Mental Illness (NAMI)",
     "always_show": false,
     "tags": "mental illness information support family caregiver navigation what to expect medication questions diagnosis advocacy",
-    "description": "Free peer-support help line offering information, resource referrals, and support for people living with mental health conditions and their families. Mon-Fri."
+    "description": "Free peer-support help line offering information, resource referrals, and support for people living with mental health conditions and their families. Mon-Fri.",
+    "run_by": "NAMI (nonprofit)",
+    "free": true,
+    "confidential": true,
+    "availability": "Mon-Fri, 10am-10pm ET"
   },
   {
     "id": "trevor",
@@ -67,7 +91,11 @@
     "source": "The Trevor Project (nonprofit)",
     "always_show": false,
     "tags": "LGBTQ lgbtq+ youth teen queer trans gay lesbian crisis suicide identity affirming 24/7 confidential",
-    "description": "Free, 24/7 crisis support for LGBTQ+ young people. Call, text, or chat with trained counselors who understand LGBTQ+ youth experiences."
+    "description": "Free, 24/7 crisis support for LGBTQ+ young people. Call, text, or chat with trained counselors who understand LGBTQ+ youth experiences.",
+    "run_by": "The Trevor Project (nonprofit)",
+    "free": true,
+    "confidential": true,
+    "availability": "24/7"
   },
   {
     "id": "teenline",
@@ -77,7 +105,11 @@
     "source": "Teen Line (Cedars-Sinai)",
     "always_show": false,
     "tags": "teen youth peer support talk to someone my age stress school anxiety relationships not an emergency listen",
-    "description": "A teen-to-teen support line where teens talk with trained teen volunteers about anything on their mind, from everyday stress to bigger struggles. Evenings."
+    "description": "A teen-to-teen support line where teens talk with trained teen volunteers about anything on their mind, from everyday stress to bigger struggles. Evenings.",
+    "run_by": "Teen Line / Cedars-Sinai",
+    "free": true,
+    "confidential": true,
+    "availability": "Evenings, 6-10pm PT"
   },
   {
     "id": "jed",
@@ -87,7 +119,11 @@
     "source": "The Jed Foundation (nonprofit)",
     "always_show": false,
     "tags": "teen young adult mental health emotional health guides how to help a friend safety plan college school understanding",
-    "description": "Plain-language guides and tools to help teens and young adults understand mental health, support a friend, and make a safety plan."
+    "description": "Plain-language guides and tools to help teens and young adults understand mental health, support a friend, and make a safety plan.",
+    "run_by": "The Jed Foundation (nonprofit)",
+    "free": true,
+    "confidential": true,
+    "availability": "Online, anytime"
   },
   {
     "id": "trans-lifeline",
@@ -97,6 +133,10 @@
     "source": "Trans Lifeline (nonprofit)",
     "always_show": false,
     "tags": "transgender trans nonbinary peer support crisis community-run by and for trans people identity",
-    "description": "A peer-support hotline run by and for trans people, offering connection and support without nonconsensual active rescue."
+    "description": "A peer-support hotline run by and for trans people, offering connection and support without nonconsensual active rescue.",
+    "run_by": "Trans Lifeline (by & for trans people)",
+    "free": true,
+    "confidential": true,
+    "availability": "Varies; see site"
   }
 ]
