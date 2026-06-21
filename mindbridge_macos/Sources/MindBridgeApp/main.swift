@@ -183,13 +183,6 @@ struct RootView: View {
                 LaunchStateView()
             }
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .automatic) {
-                Button("Reload") {
-                    Task { await server.start() }
-                }
-            }
-        }
     }
 }
 

@@ -1,10 +1,9 @@
-"""Generation step: ask Claude to produce the two-audience output (clinician
-evidence + family explainer), grounded in the retrieved guidelines and resources.
+"""Generation step: produce the two-audience output (clinician evidence +
+family explainer), grounded in retrieved guidelines, resources, and note excerpts.
 
-With an API key it calls Claude live for any patient. Without one, it returns a
-cached, realistic result for the three built-in demo patients — so the app and a
-demo video always work. The ML signal itself is always real (model_engine), key
-or no key.
+The macOS/Streamlit app calls Gemini live via ``explain_with_gemini``. The older
+provider-agnostic ``explain`` function is kept for compatibility with tests and
+scripts that still use cached demo responses.
 """
 
 import json
@@ -13,7 +12,7 @@ import os
 from prompts import SYSTEM_PROMPT, build_user_message
 
 class NoKeyError(Exception):
-    """Raised when a custom patient is analyzed but no provider API key is set."""
+    """Raised when live generation needs a provider API key."""
 
 
 # Provider-agnostic: set any ONE of these keys to enable live analysis. Force a
@@ -28,6 +27,82 @@ _DEFAULT_MODELS = {
     "openai": "gpt-4o",
     "gemini": "gemini-2.5-flash",
 }
+
+HARDCODED_ANALYSIS_RESPONSE = {
+    "clinician": {
+        "signal_summary": (
+            "The EEG model returns an elevated MDD-associated signal. Treat this as a "
+            "decision-support cue to review alongside interview findings, symptom scales, "
+            "sleep, medications, substance use, and safety assessment."
+        ),
+        "evidence_to_consider": [
+            {
+                "point": (
+                    "Confirm symptom severity and functional impairment with a structured "
+                    "clinical interview and a validated adolescent depression measure."
+                ),
+                "source": "GLAD-PC and APA adolescent depression guidance",
+            },
+            {
+                "point": (
+                    "If symptoms are moderate to severe, consider evidence-based psychotherapy "
+                    "and coordinated follow-up before making medication decisions."
+                ),
+                "source": "Guideline-backed stepped-care recommendations",
+            },
+            {
+                "point": (
+                    "Document suicide-risk screening, protective factors, means safety, and the "
+                    "follow-up plan before discharge or handoff."
+                ),
+                "source": "988 Lifeline safety-planning recommendations",
+            },
+        ],
+        "safety_flags": [
+            "Ask directly about suicidal thoughts, self-harm, access to lethal means, and recent escalation.",
+            "Escalate immediately if intent, plan, psychosis, intoxication, or unsafe home supervision is present.",
+        ],
+        "caveat": (
+            "This demo output is hardcoded for presentation flow. MindBridge does not diagnose "
+            "or prescribe; the clinician remains responsible for interpretation and decisions."
+        ),
+    },
+    "family": {
+        "summary": (
+            "The brainwave summary shows a pattern that can sometimes appear in depression, "
+            "but it is not a diagnosis. It is one clue for the care team to combine with the "
+            "conversation, questionnaires, sleep changes, stress, and safety concerns."
+        ),
+        "what_matters": [
+            "This result is a prompt for a careful follow-up conversation, not a final answer.",
+            "The next useful step is a clinician visit with a simple symptom checklist and safety check.",
+            "If there is any talk of self-harm or immediate danger, use crisis support right away.",
+        ],
+        "next_steps": [
+            {
+                "step": "Schedule or confirm the follow-up visit with the clinician or mental-health provider.",
+                "timeframe": "this week",
+            },
+            {
+                "step": "Write down changes in mood, sleep, appetite, school, and social withdrawal.",
+                "timeframe": "before the visit",
+            },
+            {
+                "step": "Save 988 and remove or lock up medications, firearms, and other lethal means.",
+                "timeframe": "today",
+            },
+        ],
+        "resource_ids": ["988", "crisis-text", "findtreatment", "nami", "jed", "211"],
+    },
+}
+
+
+def hardcoded_analysis_response():
+    """Return the fixed response used for the temporary presentation demo path."""
+    out = json.loads(json.dumps(HARDCODED_ANALYSIS_RESPONSE))
+    out["mode"] = "hardcoded"
+    out["provider"] = "presentation-demo"
+    return out
 
 
 def _detect_provider():
@@ -58,9 +133,24 @@ def explain(patient_block, signal_block, guidelines_block, resources_block,
         out["mode"] = "demo"
         return out
     raise NoKeyError(
-        "Live analysis of a custom patient needs an API key — set ANTHROPIC_API_KEY, "
+        "Live analysis needs an API key — set ANTHROPIC_API_KEY, "
         "OPENAI_API_KEY, or GEMINI_API_KEY. The three demo patients run with no key."
     )
+
+
+def explain_with_gemini(patient_block, signal_block, guidelines_block, resources_block,
+                        note_block="", api_key=None):
+    """Generate live output with Gemini only. No cached demo fallback."""
+    key = api_key or os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if not key:
+        raise NoKeyError(
+            "Run AI analysis uses live Gemini. Set GEMINI_API_KEY in .env or your environment."
+        )
+    out = _explain_live("gemini", key, patient_block, signal_block,
+                        guidelines_block, resources_block, note_block)
+    out["mode"] = "live"
+    out["provider"] = "gemini"
+    return out
 
 
 def _extract_json(text):

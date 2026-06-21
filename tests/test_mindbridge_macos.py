@@ -38,3 +38,10 @@ def test_mindbridge_macos_plist_names_app():
     assert "<string>MindBridge</string>" in plist
     assert "<string>MindBridgeApp</string>" in plist
     assert "com.local.mindbridge.webapp" in plist
+
+
+def test_mindbridge_macos_has_no_reload_toolbar_button():
+    source = (APP / "Sources" / "MindBridgeApp" / "main.swift").read_text()
+
+    assert 'Button("Reload")' not in source
+    assert "ToolbarItemGroup" not in source

@@ -59,11 +59,3 @@ DEMO_PATIENTS = {
 
 def patient_labels():
     return list(DEMO_PATIENTS.keys())
-
-
-# Friendly names for the EEG model's hidden "archetype" (used in the custom builder).
-ARCHETYPE_LABELS = {
-    "control_like": "Typical / control-like pattern",
-    "melancholic_leaning": "Melancholic-leaning pattern (illustrative)",
-    "atypical_leaning": "Atypical-leaning pattern (illustrative)",
-}
