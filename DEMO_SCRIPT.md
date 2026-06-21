@@ -62,20 +62,25 @@ Problem Understanding — 30% of the score.)*
 
 ### BEAT 4 — The responsible-AI choice (the climax) (2:25–3:30)
 
-> "Now the choice we're proudest of. While building this, our team trained a **real**
-> machine-learning model that detects depression from brain-wave data. On public research
-> data, it hit about **95% accuracy.**
+*(On screen: go back to the box. Type a QUESTION, not a document.)*
+
+> "Now the choice we're proudest of. Watch what happens when I ask ClearStep the question
+> every scared parent actually wants to ask." *(type "Does my son have depression?" → Explain)*
 >
-> And then we **deliberately left it out of ClearStep.**
+> *(The red STOP card appears.)* "It **refuses.** *'ClearStep won't answer that — and that's
+> on purpose.'* And here's why that isn't a cop-out: while building this, our team trained a
+> **real** machine-learning model that detects depression from brain-wave data — properly,
+> leave-one-subject-out validated. It scored **0.95 AUC.**" *(point to the ROC curve on the
+> card)* "There it is, on screen. We could have shipped it.
 >
-> Because no algorithm should tell a scared parent *'your child is 82% likely depressed.'*
-> That's not help — that's harm. So ClearStep **never diagnoses.** It stamps every answer
-> *'general information, not advice about your specific situation,'* and it hands every real
-> decision back to a human.
+> But that was on **58 adults from one dataset** — and no brain scan is a real depression
+> test. A confident number about your child does harm, not help. So we **benched our own
+> model** and built ClearStep to **refuse the question** instead, and hand you to a real
+> person.
 >
-> The most responsible thing our AI does is **refuse to guess about your family.** That
-> restraint *is* ClearStep — taking people from confusion, to clarity, to action, without
-> ever pretending to be something it's not. Thank you."
+> The most responsible thing our AI does is **know when not to answer.** That's ClearStep —
+> taking a family from confusion, to clarity, to action, without ever pretending to be
+> something it's not. Thank you."
 
 ---
 

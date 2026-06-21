@@ -11,6 +11,7 @@ gets clear, verifiable next steps, a per-resource trust ribbon, and an always-on
 crisis line. ClearStep never diagnoses; it routes the real decisions to humans.
 """
 
+import re
 from pathlib import Path
 
 import streamlit as st
@@ -21,12 +22,41 @@ load_dotenv()  # read clearstep/.env so an API key there is picked up automatica
 from llm import NoKeyError, analyze  # noqa: E402
 from rag import ResourceRetriever  # noqa: E402
 
+HERE = Path(__file__).parent
 EXAMPLES = {
     "ER discharge after a mental-health crisis": "er_discharge",
     "School counselor referral letter": "school_referral",
     "Insurance denial for therapy": "insurance_denial",
 }
-EXAMPLE_DIR = Path(__file__).parent / "examples"
+EXAMPLE_DIR = HERE / "examples"
+
+# --- The "Should this AI decide?" gate -----------------------------------------
+# ClearStep's job is to EXPLAIN a document. If someone instead asks it to JUDGE a
+# person — "does my kid have depression?", "should I be worried?", "which treatment?"
+# — it must refuse and route to a human. This is the signature, made into a real
+# mechanism: a short first/second-person question about someone's condition trips
+# the gate; a pasted document (long, third-person) does not.
+_ASSESS_RE = re.compile(
+    r"(do(es)?\s+(my|he|she|they|i|you)\b.{0,40}\b(have|depress|suicid|bipolar|anxiet|adhd|autis|disorder|okay|\bok\b|fine|safe|sick))"
+    r"|(is\s+(my|he|she|they|it|this|that)\b.{0,40}\b(depress|suicid|bipolar|anxious|okay|\bok\b|fine|safe|serious|normal))"
+    r"|(should\s+i\s+(be\s+)?worr)"
+    r"|(what'?s\s+wrong)"
+    r"|(\bdiagnose\b)"
+    r"|(which\s+(medication|med|drug|treatment|therapy))"
+    r"|(what\s+(medication|treatment|therapy)\s+(should|do|to))"
+    r"|(how\s+(depress|serious|bad|sick))"
+    r"|(are\s+(they|you)\s+(okay|ok|depress|safe|fine))",
+    re.IGNORECASE,
+)
+
+
+def intent_gate(text: str) -> str:
+    """Return 'assess' (refuse + route to a human) or 'explain' (the safe lane).
+    Long pasted documents always 'explain'; only a short personal question trips it."""
+    t = text.strip()
+    if len(t) <= 250 and _ASSESS_RE.search(t):
+        return "assess"
+    return "explain"
 
 URGENCY_STYLE = {
     "emergency": ("#fee2e2", "#991b1b", "Emergency — act now"),
@@ -110,16 +140,51 @@ def about_our_ai():
         <div style="font-weight:700;font-size:1.05rem;color:#3730a3;">
         We built a real depression-detection AI — then refused to use it.</div>
         <div style="margin-top:8px;line-height:1.5;">
-        Our team actually trained a machine-learning model that detects depression from
-        brain-wave (EEG) data. On public research data it reached about <b>95% accuracy</b>
-        (ROC-AUC 0.95, validated leave-one-subject-out, p&lt;0.001). Then we
-        <b>deliberately left it out of ClearStep.</b><br><br>
-        Because no brain scan or algorithm can tell a scared parent what their kid needs —
-        and a tool that announces <i>"your child is 82% likely depressed"</i> causes harm,
-        not help. <b>The most responsible thing our AI does is refuse to guess about your
-        family.</b> That restraint is ClearStep.</div></div>""",
+        To prove we could, our team trained a real machine-learning model that detects
+        depression from brain-wave (EEG) data — the rigorous way: leave-one-subject-out
+        cross-validation, permutation-tested. It scored about <b>0.95 ROC-AUC</b>.<br><br>
+        But that was on <b>just 58 adults from one public dataset</b>, and no EEG test for
+        depression has ever been clinically validated. A high score on one small dataset is
+        <b>not</b> a clinical instrument. So we <b>deliberately left it out of ClearStep.</b>
+        <br><br>Because no algorithm should tell a scared parent
+        <i>"your child is 82% likely depressed."</i> <b>The most responsible thing our AI
+        does is refuse to guess about your family.</b></div></div>""",
         unsafe_allow_html=True,
     )
+    if (HERE / "roc_curve.png").exists():
+        st.image(str(HERE / "roc_curve.png"),
+                 caption="Our real, benched model — ROC-AUC 0.95 on 58 adults, one dataset. "
+                         "Strong on paper, and still not something that should judge a child.")
+
+
+def stop_card():
+    """Shown when the gate trips: ClearStep visibly REFUSES to assess a person."""
+    st.markdown(
+        """<div style="border:2px solid #b91c1c;border-radius:10px;padding:16px 18px;
+        background:#fef2f2;">
+        <div style="font-weight:700;font-size:1.1rem;color:#991b1b;">
+        ClearStep won't answer that — and that's on purpose.</div>
+        <div style="margin-top:8px;line-height:1.5;">
+        You're asking ClearStep to judge whether someone has a condition, how serious it is,
+        or what to do about it. <b>ClearStep never does that.</b> No app can tell you whether
+        your child is depressed — only a trained person can.<br><br>
+        And we're not refusing because we couldn't build it. We trained a real
+        depression-detection model on brain-wave data (0.95 AUC) — then benched it, because a
+        confident-sounding number about your kid does harm, not help.
+        <b>The most responsible thing our AI does is know when NOT to answer.</b></div></div>""",
+        unsafe_allow_html=True,
+    )
+    if (HERE / "roc_curve.png").exists():
+        st.image(str(HERE / "roc_curve.png"),
+                 caption="The model we built and benched (AUC 0.95, 58 adults). This is why we "
+                         "won't point it at your child.")
+    st.markdown("**What ClearStep *can* do:** paste the actual letter, bill, or form you're "
+                "confused about, and it'll explain it. For anything about how a person is "
+                "doing, reach a human:")
+    c1, c2, c3 = st.columns(3)
+    c1.link_button("Call or text 988", "https://988lifeline.org", use_container_width=True)
+    c2.link_button("Crisis Text Line", "https://www.crisistextline.org", use_container_width=True)
+    c3.link_button("Find a provider", "https://findtreatment.gov", use_container_width=True)
 
 
 def build_takehome(result, resources):
@@ -221,10 +286,16 @@ def main():
         key=f"doc_{example_key}",
         placeholder="Paste a discharge summary, school letter, insurance denial...",
     )
+    st.caption("Try typing a question like *“Does my son have depression?”* to see the one "
+               "thing ClearStep refuses to do.")
 
     if st.button("Explain this for me", type="primary", use_container_width=True):
         if not document_text.strip():
-            st.error("Please paste a document or pick an example first.")
+            st.error("Please paste a document or ask a question first.")
+        elif intent_gate(document_text) == "assess":
+            # The "Should this AI decide?" gate: refuse to judge a person.
+            st.session_state.view = "stopped"
+            st.session_state.pop("result", None)
         else:
             active = example_key if document_text.strip() == default_text.strip() else None
             with st.spinner("Reading the document and finding help you can trust..."):
@@ -238,10 +309,15 @@ def main():
                     st.error(f"Something went wrong analyzing the document: {e}"); result = None
             if result is not None:
                 # Persist so later clicks (download, checkboxes) don't blank the page.
+                st.session_state.view = "result"
                 st.session_state.result = result
                 st.session_state.doc = document_text
 
-    if st.session_state.get("result"):
+    view = st.session_state.get("view")
+    if view == "stopped":
+        st.divider()
+        stop_card()
+    elif view == "result" and st.session_state.get("result"):
         if st.session_state.result.get("mode") == "demo":
             st.caption("Demo mode: cached AI result (no API key set).")
         st.divider()

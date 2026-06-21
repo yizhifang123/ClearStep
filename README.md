@@ -43,7 +43,7 @@ ClearStep is built on three pillars that set it apart.
 
 ### 1. We built a real depression-detection AI — then refused to use it
 
-Our team actually trained a machine-learning model that detects depression from brain-wave (EEG) data. On public research data (Mumtaz 2016, CC BY 4.0), it reached about **95% accuracy** (ROC-AUC 0.95, leave-one-subject-out cross-validation, p<0.001). Then we **deliberately left it out of ClearStep.**
+Our team actually trained a machine-learning model that detects depression from brain-wave (EEG) data — the rigorous way (leave-one-subject-out cross-validation, permutation test p≈0.001). It reached about **0.95 ROC-AUC** — but on **just 58 adults from one public dataset** (Mumtaz 2016, CC BY 4.0), and no EEG test for depression has ever been clinically validated. A high score on one small dataset is **not** a clinical instrument. So we **deliberately left it out of ClearStep.**
 
 Why? Because no brain scan or algorithm can tell a scared parent what their child needs. A tool that announces *"your child is 82% likely depressed"* causes harm, not help. **The most responsible thing our AI does is refuse to guess about your family.** That restraint — the willingness to bench a powerful model because it's the right thing to do — is ClearStep.
 

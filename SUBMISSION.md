@@ -50,13 +50,16 @@ matched public resources — each carrying a **trust ribbon** showing *who runs 
 it's free, whether it's confidential, and when it's available.* A crisis line is on every
 screen, and you can download a take-home summary.
 
-**Our signature — honest AI.** Our team actually trained a real machine-learning model that
-detects depression from brain-wave (EEG) data — about **95% accuracy** on public research
-data. Then we **deliberately left it out of ClearStep.** Because no algorithm should tell a
-scared parent *"your child is 82% likely depressed."* ClearStep **never diagnoses**, stamps
-every answer *"general information, not advice about your specific situation,"* and routes
-every real decision to a human. The most responsible thing our AI does is refuse to guess
-about your family.
+**Our signature — honest AI.** To prove we could, our team trained a real machine-learning
+model that detects depression from brain-wave (EEG) data, the rigorous way (leave-one-
+subject-out cross-validation, permutation-tested): about **0.95 ROC-AUC.** But that was on
+**just 58 adults from one public dataset** — no clinical test — so we **deliberately left it
+out of ClearStep.** That refusal is a real feature, not a slogan: ask ClearStep to judge a
+person ("does my kid have depression?") and a built-in gate **visibly stops and routes you
+to a human** instead of answering. ClearStep **never diagnoses**, stamps every answer
+*"general information, not advice about your specific situation,"* and shows you the benched
+model's own results as the reason it won't guess. The most responsible thing our AI does is
+know when *not* to answer.
 
 **Why AI, not a web search:** a search engine can't read *your* letter. ClearStep
 understands *this* document's jargon, judges *its* urgency, rewrites *it* in plain language,
@@ -74,7 +77,10 @@ once.* Our answer was to put the guardrails in the interface (so they hold even 
 is wrong) and to make restraint the product — including benching our own model.
 
 **Accomplishments we're proud of.** A real, validated ML model *and* the discipline to
-refuse to use it; a trust ribbon that fights misinformation; a tool that's genuinely safe.
+refuse to use it; the refusal turned into a working safety gate; a trust ribbon that fights
+misinformation. Every resource ClearStep shows is one of **10 hand-verified public services**
+with checked contact info — the AI is constrained to cite only these, so it has surfaced
+**zero invented or unverifiable resources.**
 
 **What we learned.** The most useful AI here isn't the most confident answer — it's the
 clearest one, delivered with the human in control.
@@ -94,12 +100,12 @@ Inputs: any confusing mental-health document — ER discharge, school letter, in
 
 ## Human-in-the-Loop Design (≤500 chars)
 ```
-The decision ClearStep refuses to make: whether you or your child actually has depression (or any condition), and whether a situation is a true emergency. It never diagnoses and gives no medical advice — it explains a document someone else wrote and routes the real decisions to a trained human (988, Crisis Text Line, your provider), one tap away on every screen. Why: misjudging a young person's mental health can be life-or-death, and only a person can weigh the context an AI can't see.
+The decision ClearStep refuses to make: whether you or your child has a condition, how serious it is, or what to do about it. A built-in gate detects these questions and visibly STOPS — it shows why and hands off to a human (988, Crisis Text Line, your provider), one tap away. It never diagnoses or gives medical advice; it only explains a document someone else wrote. Why: misjudging a young person's mental health can be life-or-death, and only a person can weigh what an AI can't see.
 ```
 
 ## Responsible AI Guardrail (≤500 chars)
 ```
-Risk: families over-trust a confident-sounding AI — a tool that labels a kid "82% depressed" does harm. Our mitigation is unusually concrete: we actually trained a real EEG depression-detection model (~95% accuracy) and then DELIBERATELY refused to put it in ClearStep, because no algorithm should tell a family that. The app never diagnoses, stamps every result "general info, not your situation," shows a trust ribbon on each resource, and always surfaces the 988 crisis line.
+Risk: a family over-trusts a confident AI and treats a guess about their child as fact. In-app design choices: (1) a "Should this AI decide?" gate — ask it to judge a person and it visibly REFUSES, routing to a human; (2) every result stamped "general info, not your situation"; (3) the AI cites only our verified resource directory (zero invented help); (4) 988 always on screen. We even trained a real EEG model (0.95 AUC, 58 adults) and benched it — no small-dataset score is a clinical test.
 ```
 
 ## Tools Used (≤800 chars)
