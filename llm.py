@@ -115,11 +115,12 @@ def _explain_live(provider, key, patient_block, signal_block, guidelines_block,
 # --- Cached demo results for the three built-in patients (keyed by seed) ---------
 
 DEMO_RESPONSES = {
-    16: {  # P(MDD)=0.62 — elevated but uncertain
+    373: {  # P(MDD)=0.82 — elevated
         "clinician": {
-            "signal_summary": "The EEG model returns an elevated signal (P≈0.62 for the "
-            "MDD-associated pattern), but only modestly above threshold and with wide "
-            "uncertainty (LOSO AUC 95% CI 0.88–1.00); treat it as one weak data point.",
+            "signal_summary": "The EEG model returns an elevated signal (P≈0.82 for the "
+            "MDD-associated pattern), clearly above the decision threshold but with wide "
+            "model uncertainty (LOSO AUC 95% CI 0.88–1.00); treat it as one supportive "
+            "data point, not a diagnosis.",
             "evidence_to_consider": [
                 {"point": "Confirm with a clinical interview and a validated measure "
                  "(PHQ-A) rather than acting on the signal alone.",
@@ -161,9 +162,9 @@ DEMO_RESPONSES = {
             "resource_ids": ["988", "crisis-text", "findtreatment", "nami", "jed", "211"],
         },
     },
-    350: {  # P(MDD)=0.48 — borderline / inconclusive
+    359: {  # P(MDD)=0.45 — borderline / inconclusive
         "clinician": {
-            "signal_summary": "The EEG signal is borderline (P≈0.48), inside the model's "
+            "signal_summary": "The EEG signal is borderline (P≈0.45), inside the model's "
             "low-confidence band (0.40–0.60). It is effectively inconclusive and should "
             "not move the assessment in either direction.",
             "evidence_to_consider": [
@@ -196,9 +197,9 @@ DEMO_RESPONSES = {
             "resource_ids": ["988", "crisis-text", "findtreatment", "nami", "teenline"],
         },
     },
-    235: {  # P(MDD)=0.03 — low signal
+    487: {  # P(MDD)=0.17 — low signal
         "clinician": {
-            "signal_summary": "The EEG signal is low (P≈0.03 for the MDD-associated "
+            "signal_summary": "The EEG signal is low (P≈0.17 for the MDD-associated "
             "pattern). Importantly, a low signal does NOT rule out depression — the model "
             "detects a group-level pattern, not the disorder.",
             "evidence_to_consider": [

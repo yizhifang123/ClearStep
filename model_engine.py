@@ -50,15 +50,22 @@ def confidence_label(prob):
 
 
 def _ood_flags(eeg):
-    """Flag synthetic features outside the model's 1st-99th training percentile."""
+    """Flag synthetic features that are GENUINELY extreme vs the training distribution:
+    outside the central 1st–99th percentile AND beyond ~2.5 SD. The two-part test
+    matters because with 16 features a plain p01–p99 bound trips on ~half of even
+    in-distribution patients by chance (multiple comparisons) — this flags only true
+    outliers, so the guardrail stays meaningful instead of noisy.
+    """
     ref = _bundle()["feature_reference"]
     flags = []
     for name, value in eeg.items():
         r = ref.get(name)
         if not r:
             continue
-        lo, hi = r.get("p01"), r.get("p99")
-        if lo is not None and hi is not None and not (lo <= value <= hi):
+        lo, hi, mean, std = r.get("p01"), r.get("p99"), r.get("mean"), r.get("std")
+        if lo is None or hi is None or not std:
+            continue
+        if not (lo <= value <= hi) and abs((value - mean) / std) > 2.5:
             flags.append(f"{name} = {value:.3f} (training range {lo:.3f}–{hi:.3f})")
     return flags
 
@@ -81,12 +88,3 @@ def analyze_patient(seed, archetype):
         "subtype_leaning": subtype,  # illustrative, from cortisol only
         "metrics": metrics(),
     }
-
-
-# Curated cases tuned for a clean demo spread (low / borderline / elevated signal).
-# Each is (seed, archetype); the model output is real, computed at runtime.
-DEMO_CASES = {
-    "Patient 1 — elevated EEG signal, wide uncertainty": (16, "control_like"),
-    "Patient 2 — borderline / inconclusive signal": (350, "control_like"),
-    "Patient 3 — low EEG signal": (235, "melancholic_leaning"),
-}

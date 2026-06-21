@@ -8,7 +8,7 @@ drive the real EEG model; the cached demo text in llm.py is keyed by the same se
 
 DEMO_PATIENTS = {
     "Jordan, 15 — low mood and trouble sleeping": {
-        "seed": 16,
+        "seed": 373,
         "archetype": "control_like",
         "vignette": "Brought in by a parent after about six weeks of low mood, "
                     "slipping grades, and pulling away from friends.",
@@ -25,7 +25,7 @@ DEMO_PATIENTS = {
         ),
     },
     "Sam, 16 — irritable and avoiding school": {
-        "seed": 350,
+        "seed": 359,
         "archetype": "control_like",
         "vignette": "Referred by a school counselor for irritability, fatigue, and a "
                     "few recent missed days.",
@@ -40,7 +40,7 @@ DEMO_PATIENTS = {
         ),
     },
     "Alex, 14 — withdrawn, parent worried": {
-        "seed": 235,
+        "seed": 487,
         "archetype": "melancholic_leaning",
         "vignette": "Parent reports Alex has been 'not themselves' for a couple of "
                     "months; Alex downplays it.",

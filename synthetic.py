@@ -33,6 +33,23 @@ EEG_FEATURE_NAMES = (
     + ["faa_F4_F3"]
 )
 
+# Per-region relative-band-power means (delta, theta, alpha, beta, gamma), calibrated
+# to the Layer A model's TRAINING distribution (model.pkl feature_reference) so synthetic
+# patients look realistic and stay in-distribution (no spurious OOD flags).
+REGION_MEANS = {
+    "global": np.array([0.168, 0.263, 0.313, 0.222, 0.035]),
+    "frontal": np.array([0.218, 0.266, 0.272, 0.206, 0.037]),
+    "posterior": np.array([0.132, 0.248, 0.389, 0.209, 0.022]),
+}
+# Small per-archetype shifts (slowing for depression-leaning subtypes), kept modest so
+# draws stay within the training range.
+_ARCH_SHIFT = {
+    "control_like": np.zeros(5),
+    "melancholic_leaning": np.array([0.03, 0.04, -0.02, -0.03, -0.005]),
+    "atypical_leaning": np.array([0.02, 0.03, -0.01, -0.02, -0.004]),
+}
+_DIRICHLET_CONC = 60.0  # higher = tighter around the training means
+
 ARCHETYPES = ["control_like", "melancholic_leaning", "atypical_leaning"]
 _ARCH_LABEL = {
     "control_like": "control-like",
@@ -70,27 +87,20 @@ def generate_synthetic_patient(seed: int, archetype: str | None = None) -> Synth
     rng = np.random.default_rng(seed)
     arch = archetype or str(rng.choice(ARCHETYPES))
 
-    # Relative band power per region via Dirichlet (guarantees sums to 1).
-    base = np.array([0.30, 0.18, 0.22, 0.20, 0.10])  # delta..gamma
-    shift = {
-        "control_like": np.zeros(5),
-        "melancholic_leaning": np.array([0.05, 0.06, -0.02, -0.05, -0.04]),
-        "atypical_leaning": np.array([0.03, 0.04, 0.00, -0.04, -0.03]),
-    }[arch]
-
-    def region_rel():
-        conc = np.clip(base + shift, 0.02, None) * 40.0
-        return rng.dirichlet(conc)
-
+    # Relative band power per region via Dirichlet, centered on the model's TRAINING
+    # means (keeps synthetic patients in-distribution; guarantees each region sums to 1).
+    shift = _ARCH_SHIFT[arch]
     eeg: dict[str, float] = {}
     for region in ("global", "frontal", "posterior"):
-        vals = region_rel()
-        for b, v in zip(BAND_ORDER, vals):
-            eeg[f"rel_{b}_{region}"] = float(v)
+        b = np.clip(REGION_MEANS[region] + shift, 0.005, None)
+        b = b / b.sum()
+        vals = rng.dirichlet(b * _DIRICHLET_CONC)
+        for band, v in zip(BAND_ORDER, vals):
+            eeg[f"rel_{band}_{region}"] = float(v)
     # FAA: depression-leaning -> more negative (greater relative right activation)
     faa_mean = {"control_like": 0.05, "melancholic_leaning": -0.20,
                 "atypical_leaning": -0.08}[arch]
-    eeg["faa_F4_F3"] = float(rng.normal(faa_mean, 0.12))
+    eeg["faa_F4_F3"] = float(rng.normal(faa_mean, 0.15))
 
     # Cortisol consistent with archetype: melancholic ~ hyper; atypical ~ blunted.
     mult = {"control_like": (1.0, 1.0, 1.0),
