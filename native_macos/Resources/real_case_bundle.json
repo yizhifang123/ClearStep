@@ -1,0 +1,2741 @@
+{
+  "schemaVersion": 1,
+  "generatedAtUTC": "2026-06-21T19:55:49+00:00",
+  "condition": "EC",
+  "metrics": {
+    "nSubjects": 58,
+    "nMdd": 30,
+    "aucLoso": 0.9500000000000001,
+    "accuracyLoso": 0.9310344827586207,
+    "sensitivity": 0.9333333333333333,
+    "specificity": 0.9285714285714286
+  },
+  "subjects": [
+    {
+      "id": "HC_S1",
+      "label": "HC",
+      "probabilityMDD": 0.61927894,
+      "contributions": [
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.87829326,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.72777828,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.49935314,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.48941447,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.28238164,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.25211255,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.22110618,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.18821514,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S10",
+      "label": "HC",
+      "probabilityMDD": 0.10964805,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.0545391,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.04297949,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.91785442,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.58227542,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.52671835,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.40254795,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.33709184,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.28065847,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S11",
+      "label": "HC",
+      "probabilityMDD": 0.00841233,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -2.42356304,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -1.91612726,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -1.36544749,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.40467393,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.33683161,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.33610102,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.28066752,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.21976344,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S13",
+      "label": "HC",
+      "probabilityMDD": 0.05903598,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.31495804,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.21578998,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.01348529,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.937469,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.78955415,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.68479661,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.53988469,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.48735747,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S14",
+      "label": "HC",
+      "probabilityMDD": 0.12300563,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.24672954,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -1.24404197,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.95090794,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.82246861,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.61292803,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.42766929,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.3684541,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.32804333,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S15",
+      "label": "HC",
+      "probabilityMDD": 0.2184657,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.33144973,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -1.26722517,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.8380816,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.8341145,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.80116581,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.79046788,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.78947626,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.64572983,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S16",
+      "label": "HC",
+      "probabilityMDD": 0.87576584,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 0.52043279,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.29330876,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.2745321,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.18488802,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.16344517,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.12187102,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.11277775,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.10805678,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S17",
+      "label": "HC",
+      "probabilityMDD": 0.06936683,
+      "contributions": [
+        {
+          "feature": "rel_delta_global",
+          "value": -0.75936456,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.70063476,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.69043575,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.55500886,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.53962824,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.37715499,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.21127585,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.17568965,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S19",
+      "label": "HC",
+      "probabilityMDD": 0.0175482,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.47033891,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.43738722,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.15327849,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.89917574,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.78993539,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.72646893,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.59394304,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.47210495,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S2",
+      "label": "HC",
+      "probabilityMDD": 0.03067627,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.00526586,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.96695732,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.88250273,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.72113843,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.68796478,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.55623564,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.38468196,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.34359047,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S20",
+      "label": "HC",
+      "probabilityMDD": 0.25953338,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.82131347,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.76459664,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.61635162,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.49212585,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.48702106,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.36858343,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.29961843,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.28164522,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S21",
+      "label": "HC",
+      "probabilityMDD": 0.12219728,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.16811922,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.16614939,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.89947733,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.59094838,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.5815429,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.56127763,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.47253888,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.41113121,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S22",
+      "label": "HC",
+      "probabilityMDD": 0.01004636,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -1.33623443,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -1.31470776,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -1.25247609,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.731766,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.68727806,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.68029095,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.1929938,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.18120097,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S23",
+      "label": "HC",
+      "probabilityMDD": 0.02893919,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.39950005,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.33500792,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.12614698,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.81555224,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.71495336,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.63627862,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.45853924,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.43768406,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S24",
+      "label": "HC",
+      "probabilityMDD": 0.12012463,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.89617028,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.65939186,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.48085927,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.3869739,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.37995048,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.33335059,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.10517604,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.0817177,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S25",
+      "label": "HC",
+      "probabilityMDD": 0.06799261,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -1.36642858,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -1.06456344,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.80104079,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.43945417,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.38901769,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.37877122,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.36427737,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.32769839,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S26",
+      "label": "HC",
+      "probabilityMDD": 0.22720796,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.07332578,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.94561383,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.92396231,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.91106622,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.72971814,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.61336854,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.60982769,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.59705287,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S27",
+      "label": "HC",
+      "probabilityMDD": 0.3250963,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.08961078,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.07601079,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.9511445,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.67694593,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.60957151,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.58782292,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.5708686,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.29012406,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S28",
+      "label": "HC",
+      "probabilityMDD": 0.24773363,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.29153107,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.88899757,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.86778497,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.86682432,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.82225546,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.70981075,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.70826006,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.69293431,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S29",
+      "label": "HC",
+      "probabilityMDD": 0.05803536,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.30717801,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -1.24779039,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.06406108,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.56946684,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.50942472,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.47144638,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.30457422,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.23983299,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S3",
+      "label": "HC",
+      "probabilityMDD": 0.23280219,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -0.91828539,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.89905771,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.65943751,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.50841689,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.48514954,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.38962694,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.30312599,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.25375699,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S30",
+      "label": "HC",
+      "probabilityMDD": 0.3250963,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.08961078,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.07601079,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.9511445,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.67694593,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.60957151,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.58782292,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.5708686,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.29012406,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S4",
+      "label": "HC",
+      "probabilityMDD": 0.06689151,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.5292261,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.45636503,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.23600445,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.79874326,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.6640711,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.60333007,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.59071692,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.49316961,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S5",
+      "label": "HC",
+      "probabilityMDD": 0.05811805,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.11173584,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -1.0004644,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.77682442,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.24603141,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.20252823,
+          "direction": "HC"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": -0.16890336,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_posterior",
+          "value": -0.05012802,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.04569285,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S6",
+      "label": "HC",
+      "probabilityMDD": 0.09997066,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.78338916,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.70989804,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.5052303,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.29604494,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.27007199,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.2419366,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.2180947,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.20798122,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "HC_S7",
+      "label": "HC",
+      "probabilityMDD": 0.00474465,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -1.63406298,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -1.37409741,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -1.1091793,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.9166189,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.86402684,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.72706895,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.25165016,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.18416943,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S8",
+      "label": "HC",
+      "probabilityMDD": 0.06109147,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.31148014,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.19278692,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.04576728,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.81362725,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.65641563,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.54964777,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.4202783,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.34352085,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "HC_S9",
+      "label": "HC",
+      "probabilityMDD": 0.39889001,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.40508124,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.30931331,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -1.08324223,
+          "direction": "HC"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": 0.87131236,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.74188993,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.70429863,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.5462598,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.50951095,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S1",
+      "label": "MDD",
+      "probabilityMDD": 0.99101716,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 1.62542016,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.14088381,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.71434397,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.23961063,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.22448578,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.20991187,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.20551442,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.12911659,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S10",
+      "label": "MDD",
+      "probabilityMDD": 0.96923413,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 1.10553962,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 1.07274398,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.80282702,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.49112456,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.28266343,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.19682783,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.19014049,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.1715159,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S11",
+      "label": "MDD",
+      "probabilityMDD": 0.86347684,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.85385949,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.57420116,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.44667583,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.28873225,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.20898846,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.15843924,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.15800231,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.15569541,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S13",
+      "label": "MDD",
+      "probabilityMDD": 0.79069164,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 0.29329433,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.20447563,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.18216486,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.1621334,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.14741862,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.10899428,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.10639255,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.0915897,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S14",
+      "label": "MDD",
+      "probabilityMDD": 0.99860619,
+      "contributions": [
+        {
+          "feature": "rel_beta_frontal",
+          "value": 2.57284378,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.75057873,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -1.13313746,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.62529848,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.57341094,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.40714474,
+          "direction": "MDD"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": 0.32086805,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.23372769,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S15",
+      "label": "MDD",
+      "probabilityMDD": 0.59329904,
+      "contributions": [
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.63246928,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.42872394,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.35403738,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.33719981,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.22900605,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.22529006,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.19176085,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_global",
+          "value": -0.15776407,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S17",
+      "label": "MDD",
+      "probabilityMDD": 0.75523451,
+      "contributions": [
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.24182538,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.19612244,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.19394142,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.18159476,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.16051245,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.15572797,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.15523908,
+          "direction": "HC"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": -0.15217932,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S18",
+      "label": "MDD",
+      "probabilityMDD": 0.88514115,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.51026112,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.38229684,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.36951787,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.32903076,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.2291382,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.22714685,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.20187458,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.18082015,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S19",
+      "label": "MDD",
+      "probabilityMDD": 0.79248268,
+      "contributions": [
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.25076978,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.24397444,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.21902285,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.21641505,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.20921939,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.20765937,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.19517523,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.17096851,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S2",
+      "label": "MDD",
+      "probabilityMDD": 0.33024702,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.12615221,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.78718378,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.71780863,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.69492131,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.65762404,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.60831691,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.59849032,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.56421338,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S20",
+      "label": "MDD",
+      "probabilityMDD": 0.52324163,
+      "contributions": [
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.3830818,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.32899796,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.26190055,
+          "direction": "HC"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": 0.24331303,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.20877287,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.18347332,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.15973282,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_global",
+          "value": 0.13415447,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S21",
+      "label": "MDD",
+      "probabilityMDD": 0.99424005,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 0.98178726,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.88238194,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.81942253,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.73161891,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.6932966,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.61372372,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.43555685,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.35335909,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S22",
+      "label": "MDD",
+      "probabilityMDD": 0.94927701,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 2.19856241,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.39158087,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -1.02975515,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.75150664,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.71753622,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.53094875,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.44676915,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.40580418,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S23",
+      "label": "MDD",
+      "probabilityMDD": 0.70003432,
+      "contributions": [
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.32471469,
+          "direction": "HC"
+        },
+        {
+          "feature": "faa_F4_F3",
+          "value": 0.20938268,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.15849566,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.14841708,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.13526348,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.0740409,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.06579752,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.06134958,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S24",
+      "label": "MDD",
+      "probabilityMDD": 0.99969163,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 2.40718647,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.88073752,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 1.28574333,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.28536806,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.25734081,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.2419288,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.21663198,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.21590905,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S25",
+      "label": "MDD",
+      "probabilityMDD": 0.55555539,
+      "contributions": [
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -1.62044811,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.97986644,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.79201198,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.51824371,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_global",
+          "value": -0.43433662,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_posterior",
+          "value": 0.28126411,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.19805564,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.17253099,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S26",
+      "label": "MDD",
+      "probabilityMDD": 0.89502504,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.80198288,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.70832487,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.49385057,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.46611282,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.4216527,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.36650353,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.16640872,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.14428506,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S27",
+      "label": "MDD",
+      "probabilityMDD": 0.01585144,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": -1.3140855,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -1.26825424,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.93943144,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": -0.71099996,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": -0.68838729,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.643155,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": -0.63868246,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.44786679,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S28",
+      "label": "MDD",
+      "probabilityMDD": 0.73937318,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.57023997,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.55364313,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.54813668,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": -0.51503216,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.43514285,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": -0.41615343,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.39811894,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.36777664,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S29",
+      "label": "MDD",
+      "probabilityMDD": 0.99604169,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 1.4252189,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.23051019,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 1.12222085,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.44344248,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.34547571,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.27646012,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.27000504,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.17026293,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S3",
+      "label": "MDD",
+      "probabilityMDD": 0.9761262,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 1.48757804,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.40042052,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.93063313,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.4785601,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.37698649,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.34289926,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.26550645,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.25661614,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S30",
+      "label": "MDD",
+      "probabilityMDD": 0.96059113,
+      "contributions": [
+        {
+          "feature": "rel_beta_frontal",
+          "value": 1.46561383,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": -0.81232956,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.74507114,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.66802971,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.61263941,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.58309001,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.50074935,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 0.43482663,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S31",
+      "label": "MDD",
+      "probabilityMDD": 0.99957086,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 1.99033318,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 1.98086682,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 1.73975739,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.2401998,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.22294773,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.22128996,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.1890233,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.18165405,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S32",
+      "label": "MDD",
+      "probabilityMDD": 0.99063143,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 0.85162482,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.78354977,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.61987645,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.46531527,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.40450963,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.34152854,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.31387853,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.30862364,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S33",
+      "label": "MDD",
+      "probabilityMDD": 0.99999398,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 3.34228205,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 3.16122635,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 2.56608983,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.96107447,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.61419058,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.54883535,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.47282787,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.37791012,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S34",
+      "label": "MDD",
+      "probabilityMDD": 0.99999398,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 3.34228205,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 3.16122635,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 2.56608983,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.96107447,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": 0.61419058,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.54883535,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.47282787,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.37791012,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S5",
+      "label": "MDD",
+      "probabilityMDD": 0.96959156,
+      "contributions": [
+        {
+          "feature": "rel_beta_global",
+          "value": 0.86790659,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.82854106,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.81334206,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.187985,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.12601916,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_frontal",
+          "value": -0.120153,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.11600444,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.08974481,
+          "direction": "HC"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S6",
+      "label": "MDD",
+      "probabilityMDD": 0.58503734,
+      "contributions": [
+        {
+          "feature": "rel_gamma_frontal",
+          "value": 0.3904992,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.2405289,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": -0.22891289,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.22104953,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 0.18228607,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_gamma_global",
+          "value": 0.15027241,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": -0.14673359,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_theta_posterior",
+          "value": 0.13664387,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S7",
+      "label": "MDD",
+      "probabilityMDD": 0.98634941,
+      "contributions": [
+        {
+          "feature": "rel_beta_posterior",
+          "value": 1.6003796,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 1.28674403,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_frontal",
+          "value": 0.84195105,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_posterior",
+          "value": -0.46069511,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": -0.39013371,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": -0.38521139,
+          "direction": "HC"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.26622138,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_global",
+          "value": 0.19899301,
+          "direction": "MDD"
+        }
+      ]
+    },
+    {
+      "id": "MDD_S9",
+      "label": "MDD",
+      "probabilityMDD": 0.99996373,
+      "contributions": [
+        {
+          "feature": "rel_beta_frontal",
+          "value": 2.62615009,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_global",
+          "value": 2.5687639,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_beta_posterior",
+          "value": 2.05896693,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_frontal",
+          "value": 0.40528018,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_frontal",
+          "value": 0.33024099,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_delta_global",
+          "value": 0.25379986,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_alpha_posterior",
+          "value": 0.24907809,
+          "direction": "MDD"
+        },
+        {
+          "feature": "rel_theta_global",
+          "value": 0.23392201,
+          "direction": "MDD"
+        }
+      ]
+    }
+  ]
+}
