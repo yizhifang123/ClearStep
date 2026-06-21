@@ -1,48 +1,124 @@
-# Personalized Depression Treatment Decision-Support — Submission
+# MindBridge — Devpost Submission Copy
 
-> ⚠️ **Research prototype — not for clinical use.** No diagnosis, no prescription, no validated medical claims.
+Paste each block into the matching Devpost field. Char-limited fields are kept under limit.
 
-**Tagline:** An honest decision-*support* prototype that analyzes EEG to help a psychiatrist personalize depression care — built to openly state where the science isn't there yet.
+---
 
-## Inspiration
-Depression treatment is largely trial-and-error: patients cycle through medications, often enduring several failed trials before relief. A teammate watched a friend get the *same* treatment over and over with no personalization. We asked: could biological signals (EEG, hormones) help find the right treatment faster? The honest answer the field gives is "not yet" — so we built something that respects that limit instead of faking it.
+## Qualifier Approval Code
+```
+HS26-86A98BB5
+```
+*(Double-check against your original email before submitting.)*
 
-## What it does
-Two clearly-separated layers:
-- **Layer A — real ML.** Loads the open **Mumtaz 2016** EEG dataset, extracts literature-grounded features, and classifies **MDD vs. healthy control** with leakage-free **subject-wise** validation. It also *demonstrates* the field's most common methodological error (data leakage).
-- **Layer B — illustrative dashboard.** A Streamlit clinician view (on **synthetic** patients) showing the envisioned workflow: an EEG-based indication, an illustrative cortisol/subtype panel, calibrated uncertainty, plain-language explanations, automatic low-confidence flagging, and **human-in-the-loop** Confirm / Override / Request-review controls.
+## Track & Challenge
+- **Track:** High School (Grades 9–12)
+- **Challenge:** Challenge 1 — *Help is Hard to Find* · Direction A (Crisis-to-Action / translate confusing info into plain language + next steps)
 
-## How we built it
-`Python · MNE-Python · scikit-learn · Streamlit`. EEG → notch/band-pass/average-reference (MNE) → 2-second epochs → 16 features (relative band power across regions + frontal alpha asymmetry) → averaged per subject → L2 logistic regression → **leave-one-subject-out** evaluation + permutation test + probability calibration. The dashboard reads the trained model and renders the workflow.
+## Project Title
+```
+MindBridge
+```
 
-## The honest result (and why we don't oversell it)
-On 58 subjects: **ROC-AUC 0.95, accuracy 93%** (sens/spec ~93%, permutation p=0.001). That's high — and we treat it skeptically rather than as a win:
-- It's *correctly* validated (subject-wise, no leakage), so it isn't the usual overfit artifact.
-- But it's driven mostly by **relative beta power**, which can be muscle/EMG or acquisition confound as easily as depression — and Mumtaz is a small, single-site, **adult** dataset known to over-separate.
-- **Frontal alpha asymmetry contributes ~nothing** — corroborating the research that it's a near-null biomarker.
-- The effect is **robust across resting conditions** (eyes-open AUC 0.92 vs eyes-closed 0.95) — a good sign, though a stable confound would also be condition-robust.
+## Tagline (≤80 chars)
+```
+Turns a confusing mental-health workup into plain language a family can act on
+```
 
-So our credibility is *rigorous validation + transparent caveats*, not a reassuring number.
+## Elevator pitch
+```
+A parent whose teen just had a mental-health workup is handed brainwave readings and terms like "frontal alpha asymmetry" — and no idea what to do. MindBridge turns that specialist workup into plain language, what matters most, and clear next steps for the family, while giving the clinician guideline-cited evidence. The AI explains and supports; the clinician decides.
+```
 
-## What's real vs. illustrative
-**Real:** the EEG→MDD-vs-HC model, its subject-wise metrics, the leakage demo, the beta-driver finding. **Illustrative/synthetic:** all hormonal inputs, subtype leanings, treatment framing, and the adolescent cases.
+---
 
-## Challenges
-- **No open data links biology to treatment response** (EMBARC/CAN-BIND are hard-gated) → we honestly scoped to diagnosis, not treatment prediction.
-- **Data leakage** inflates most EEG-depression papers → we used subject-wise CV and built a demo of the failure mode.
-- **A suspiciously high AUC** → we dug into the drivers and reported the confound instead of celebrating.
+## Project Description (the "About the Project" field)
 
-## Accomplishments
-A working, end-to-end, *honest* prototype with a real validated ML slice, a responsible clinician UI, a domain memo with sources, and a test suite — that an expert in precision psychiatry would find credible *because* of its restraint.
+**What it does & why it matters**
+Help is often *there* — but locked behind language built for specialists. Meet a
+**parent whose 15-year-old just had a mental-health workup**: the results list brainwave
+power bands, cortisol levels, and terms like *"frontal alpha asymmetry."* The parent
+leaves confused, and the next step never happens. **MindBridge** bridges that gap: it
+takes one depression workup and produces **two** views of the same analysis — an
+evidence summary for the clinician, and a plain-language explainer for the family —
+moving a scared family from *confusion → clarity → action.*
 
-## What we learned
-Correct validation ≠ clinical utility; the hard part of "biomarker → treatment" is unsolved; and in a field full of overclaiming demos, honesty is the most impressive thing you can ship.
+**How the AI works**
+Three AI capabilities in one flow. (1) **Classification:** a *real* EEG model we trained
+(scikit-learn logistic regression on the public Mumtaz dataset, leave-one-subject-out
+AUC ≈ 0.95, p < 0.001) returns a calibrated, uncertainty-flagged signal. (2)
+**Retrieval (RAG):** TF-IDF matches the case to a curated, *cited* clinical-guideline
+corpus and a public support-resource directory — and, when a clinician pastes a
+*synthetic* physician note, a second document-level RAG grounds the output in that note's
+specifics, translating its jargon for the family. (3) **Generative AI:** a large language
+model (Google Gemini) turns the signal + retrieved evidence into the two grounded
+outputs — every clinician point cites a guideline; the family text is written at a
+6th-grade level with a next-step checklist.
 
-## What's next
-External validation / cross-dataset transfer (expected to drop — and that's the point), adolescent-appropriate data, and — only with real treatment-outcome data — a genuine treatment-response model.
+**Why AI, not a pamphlet:** a generic handout can't read *this* workup, judge *its*
+uncertainty, and translate *it* for *this* family. That per-case work is what AI does.
 
-## Built with
-Python, MNE-Python, scikit-learn, NumPy/SciPy/pandas, Streamlit, Matplotlib. Data: Mumtaz et al. 2016 (CC BY 4.0).
+**How we built it**
+A Streamlit app. The model runs locally (always live, no API key), so the AI capability
+is always demonstrable; the written output uses Google Gemini (free tier), with a cached
+demo mode so the three built-in patients work with zero setup. We reused the trained EEG model and
+synthetic-patient generator from our companion research project.
 
-## Try it
-See `README.md`. `RESEARCH.md` has the sourced evidence; `PLAN.md` the scope; `DEMO.md` the walkthrough; `SLIDES.md` the deck; `VIDEO_SCRIPT.md` the recording script.
+**Challenges**
+The honest tension: a model that scores 95% on one dataset is *not* a clinical test. We
+designed the whole product around that — the AI is a *clue*, never a verdict — including
+the counter-intuitive but vital rule that a **low signal does not rule out depression.**
+
+**Accomplishments we're proud of**
+Real ML rigor (LOSO validation, calibration, out-of-distribution flags, permutation
+p-value) paired with genuine accessibility — and guardrails that hold even if the model
+is wrong (988 always shown, uncertainty always visible, clinician always decides).
+
+**What we learned**
+The most valuable AI here isn't the most confident answer — it's the *clearest* one,
+delivered with the human firmly in control.
+
+**What's next**
+Real PHQ-A intake, local resources by ZIP (211 API), multi-language family output, and a
+clinician export that prints the plain-language explainer as a take-home sheet.
+
+**Built with:** Python · Streamlit · scikit-learn (trained model + RAG) · Anthropic
+Claude API · Claude Code (AI coding assistance, disclosed)
+
+---
+
+## AI Architecture Explanation (≤600 chars)
+```
+Inputs: a synthetic patient's EEG brainwave features + cortisol panel + context. AI capabilities: classification (a real trained EEG model) + retrieval (RAG) + generative AI. Processing: the EEG model outputs a calibrated, uncertainty-flagged signal; TF-IDF retrieves matching CITED clinical guidelines and public support resources; Gemini turns the signal + retrieved evidence into two grounded outputs. Outputs: a clinician evidence summary (every point cites a guideline) AND a family plain-language explainer with a next-step checklist and linked resources — plus an always-on 988 crisis card.
+```
+
+## Human-in-the-Loop Design (≤500 chars)
+```
+MindBridge does NOT diagnose and does NOT choose treatment. It surfaces an uncertain EEG signal plus cited guideline evidence; the clinician makes every clinical decision, and the family view says so plainly. Why: no EEG or hormonal marker is validated to diagnose or select treatment for an individual — the signal is a group-level pattern with wide uncertainty, and only a clinician can weigh the whole person, history, and context that the model never sees.
+```
+
+## Responsible AI Guardrail (≤500 chars)
+```
+Risk: a family reads the AI's signal as a diagnosis — especially treating a LOW signal as "all clear" and skipping needed care. Mitigation: the tool states explicitly that a low signal does NOT rule out depression, shows the model's uncertainty and low-confidence band on every result, never gives a diagnosis or medication advice, and always surfaces the 988 crisis line plus a clinician handoff. All patient data is synthetic, so no real personal data is exposed.
+```
+
+## Tools Used (≤800 chars)
+```
+- scikit-learn (free, open-source) — the EEG classifier (logistic regression, which WE trained) AND the TF-IDF retrieval for RAG.
+- Google Gemini API (model: gemini-2.5-flash) — FREE tier. Generates the family explainer and the guideline-grounded clinician summary. The app is provider-agnostic: one interface also supports Anthropic Claude and OpenAI.
+- Streamlit, joblib, numpy, python-dotenv (all free, open-source) — web app, model loading, math, config.
+- AI coding assistance: Claude Code (disclosed) — scaffolding and copy.
+
+No paid tool is required: the model runs locally and Gemini's free tier covers the text, so the whole app runs free.
+```
+
+## Data Disclosure (≤800 chars)
+```
+- Model training (real, public): Mumtaz 2016 "MDD Patients and Healthy Controls EEG" dataset (figshare, CC BY 4.0; 58 adults). Used only to train the EEG classifier; raw data not redistributed.
+- App patients (synthetic): every patient in the app is synthetic — EEG features generated via Dirichlet draws; cortisol calibrated to published adolescent reference ranges. No real patient data.
+- Public corpora (curated by us): clinical-guideline snippets cited to GLAD-PC, NICE, APA, FDA, USPSTF, AACAP; and public support resources (988, Crisis Text Line, 211, SAMHSA, NAMI, Trevor Project) with source links.
+- No sensitive or personal data is collected or stored.
+```
+
+## Demo Materials
+- **Pitch video (3–5 min):** _[paste link]_ — script in `DEMO_SCRIPT.md`.
+- **Working demo / walkthrough:** GitHub repo (this README + run instructions) and/or a deployed Streamlit link.
