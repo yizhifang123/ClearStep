@@ -1,0 +1,72 @@
+[
+  {
+    "id": "glad-pc-treatment",
+    "topic": "First-line treatment for adolescent depression",
+    "text": "For mild adolescent depression, guidelines support a period of active support and monitoring before starting medication. For moderate to severe depression, evidence-based psychotherapy (such as CBT or interpersonal therapy) and/or an antidepressant are recommended, with regular follow-up.",
+    "source": "GLAD-PC: Guidelines for Adolescent Depression in Primary Care (Pediatrics, 2018)",
+    "tags": "treatment therapy CBT IPT antidepressant moderate severe first-line adolescent teen options"
+  },
+  {
+    "id": "ssri-boxed-warning",
+    "topic": "Safety: antidepressants and suicide risk in youth",
+    "text": "Antidepressants carry an FDA boxed warning for an increased risk of suicidal thoughts and behavior in children, adolescents, and young adults, especially in the first weeks of treatment or after a dose change. Close monitoring is essential. Fluoxetine and escitalopram are the SSRIs FDA-approved for adolescent depression.",
+    "source": "U.S. FDA boxed warning; FDA prescribing information",
+    "tags": "medication antidepressant SSRI fluoxetine escitalopram suicide risk boxed warning safety monitoring side effects youth"
+  },
+  {
+    "id": "psychotherapy-first",
+    "topic": "Psychotherapy evidence",
+    "text": "Cognitive behavioral therapy (CBT) and interpersonal therapy (IPT) have the strongest evidence base for adolescent depression and are recommended as first-line or core components of treatment, alone or combined with medication.",
+    "source": "NICE NG134; American Academy of Child & Adolescent Psychiatry (AACAP) practice parameters",
+    "tags": "therapy psychotherapy CBT IPT counseling talk therapy first-line evidence adolescent"
+  },
+  {
+    "id": "measurement-based-care",
+    "topic": "Measurement-based care",
+    "text": "Best practice is to track depression severity over time with a validated, repeatable tool such as the PHQ-9 (or the adolescent PHQ-A), and to adjust the plan based on whether scores improve.",
+    "source": "GLAD-PC; APA Clinical Practice Guideline for the Treatment of Depression",
+    "tags": "phq-9 phq-a screening measurement track severity monitor follow-up scores tool"
+  },
+  {
+    "id": "screening",
+    "topic": "Screening recommendation",
+    "text": "Universal screening for depression in adolescents aged 12 and older with a validated instrument is recommended when systems are in place to ensure diagnosis, treatment, and follow-up.",
+    "source": "U.S. Preventive Services Task Force (USPSTF); AAP Bright Futures",
+    "tags": "screening uspstf phq-a adolescent 12 detect early identify"
+  },
+  {
+    "id": "safety-means-restriction",
+    "topic": "Safety planning and means restriction",
+    "text": "For any young person with suicide risk, collaborative safety planning and reducing access to lethal means (securing or removing firearms and stockpiled medications) are standard, evidence-supported steps.",
+    "source": "GLAD-PC; SAMHSA / Suicide Prevention Resource Center",
+    "tags": "safety plan means restriction firearms medications lock crisis suicide risk protect"
+  },
+  {
+    "id": "family-involvement",
+    "topic": "Family involvement",
+    "text": "Involving family or caregivers in psychoeducation and the treatment plan is associated with better engagement and outcomes for depressed adolescents.",
+    "source": "AACAP practice parameters; GLAD-PC",
+    "tags": "family caregiver parent involvement psychoeducation engagement support home"
+  },
+  {
+    "id": "behavioral-activation",
+    "topic": "Lifestyle and behavioral supports",
+    "text": "Regular physical activity, sleep regulation, and behavioral activation (re-engaging in rewarding activities) are useful adjuncts that can support recovery alongside therapy or medication.",
+    "source": "NICE NG134; APA Clinical Practice Guideline",
+    "tags": "exercise sleep behavioral activation lifestyle adjunct routine activity wellbeing"
+  },
+  {
+    "id": "no-biomarker-selection",
+    "topic": "Biomarkers do not select treatment (important limitation)",
+    "text": "No EEG, hormonal, or other biological marker is currently validated to choose a specific antidepressant or therapy for an individual patient. Biomarker findings are group-level associations, not individual clinical tests; treatment selection remains a clinical decision made with the patient.",
+    "source": "Consensus of current evidence (see project RESEARCH.md); precision-psychiatry literature",
+    "tags": "biomarker eeg cortisol hormone not validated treatment selection limitation honest clinical decision individual"
+  },
+  {
+    "id": "shared-decision",
+    "topic": "Shared decision-making",
+    "text": "Treatment choices should be made together with the adolescent and family, weighing preferences, prior response, side-effect profiles, and access — not by a single test or score.",
+    "source": "APA Clinical Practice Guideline; GLAD-PC",
+    "tags": "shared decision preference choice patient family weigh options access consent"
+  }
+]
