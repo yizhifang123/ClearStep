@@ -53,7 +53,7 @@ generation applied to one specific workup — exactly what AI is for.
         │     guidelines.json (cited clinical guidance) + resources.json (988, 211…)
         │
         ▼
-  llm.py — Claude grounds both outputs in the retrieved evidence:
+  llm.py — an LLM (Google Gemini by default) grounds both outputs in the evidence:
         • clinician evidence summary (every point cites a guideline)
         • family plain-language explainer (checklist + linked resources)
         │
@@ -99,8 +99,9 @@ streamlit run app.py
 
 - **No setup needed:** the three built-in demo patients run fully — the **model signal is
   always live**, and the written output is cached (great for a demo video).
-- **Live mode:** copy `.env.example` → `.env`, add `ANTHROPIC_API_KEY`, and you can
-  analyze custom synthetic patients with live AI text.
+- **Live mode:** copy `.env.example` → `.env` and add ONE API key — `GEMINI_API_KEY`,
+  `ANTHROPIC_API_KEY`, or `OPENAI_API_KEY` (provider auto-detected) — to analyze custom
+  synthetic patients with live AI text. Gemini's free tier is the zero-cost option.
 
 ## Files
 
@@ -109,7 +110,7 @@ streamlit run app.py
 | `app.py` | Two-audience Streamlit UI |
 | `model_engine.py` | Loads the real EEG model; signal + uncertainty + OOD flags |
 | `rag.py` | TF-IDF retrieval over guidelines + resources |
-| `llm.py` | Claude dual-audience generation + demo-mode fallback |
+| `llm.py` | LLM dual-audience generation (Gemini / Claude / OpenAI) + demo-mode fallback |
 | `prompts.py` | Explain-don't-prescribe system prompt + schema |
 | `guidelines.json` | Curated, cited clinical-guideline corpus (RAG) |
 | `resources.json` | Curated public support resources (RAG) |

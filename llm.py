@@ -12,49 +12,101 @@ import os
 
 from prompts import SYSTEM_PROMPT, build_user_message
 
-DEFAULT_MODEL = os.environ.get("MINDBRIDGE_MODEL", "claude-sonnet-4-6")
-
-
 class NoKeyError(Exception):
-    """Raised when a custom patient is analyzed but no API key is configured."""
+    """Raised when a custom patient is analyzed but no provider API key is set."""
 
 
-def _api_key():
-    return os.environ.get("ANTHROPIC_API_KEY")
+# Provider-agnostic: set any ONE of these keys to enable live analysis. Force a
+# provider with MINDBRIDGE_PROVIDER, otherwise the first key found wins.
+_PROVIDER_KEYS = {
+    "anthropic": ("ANTHROPIC_API_KEY",),
+    "openai": ("OPENAI_API_KEY",),
+    "gemini": ("GEMINI_API_KEY", "GOOGLE_API_KEY"),
+}
+_DEFAULT_MODELS = {
+    "anthropic": "claude-sonnet-4-6",
+    "openai": "gpt-4o",
+    "gemini": "gemini-2.5-flash",
+}
+
+
+def _detect_provider():
+    forced = os.environ.get("MINDBRIDGE_PROVIDER")
+    order = [forced] if forced else ["anthropic", "openai", "gemini"]
+    for name in order:
+        for k in _PROVIDER_KEYS.get(name, ()):
+            if os.environ.get(k):
+                return name, os.environ[k]
+    return None, None
+
+
+def _model_for(provider):
+    return os.environ.get("MINDBRIDGE_MODEL", _DEFAULT_MODELS[provider])
 
 
 def explain(patient_block, signal_block, guidelines_block, resources_block, demo_seed=None):
-    if _api_key():
-        out = _explain_live(patient_block, signal_block, guidelines_block, resources_block)
+    provider, key = _detect_provider()
+    if key:
+        out = _explain_live(provider, key, patient_block, signal_block,
+                            guidelines_block, resources_block)
         out["mode"] = "live"
+        out["provider"] = provider
         return out
     if demo_seed in DEMO_RESPONSES:
         out = json.loads(json.dumps(DEMO_RESPONSES[demo_seed]))  # deep copy
         out["mode"] = "demo"
         return out
     raise NoKeyError(
-        "Live analysis of a custom patient needs an ANTHROPIC_API_KEY. "
-        "Try one of the three built-in demo patients, which run with no key."
+        "Live analysis of a custom patient needs an API key — set ANTHROPIC_API_KEY, "
+        "OPENAI_API_KEY, or GEMINI_API_KEY. The three demo patients run with no key."
     )
 
 
-def _explain_live(patient_block, signal_block, guidelines_block, resources_block):
-    import anthropic
-
-    client = anthropic.Anthropic(api_key=_api_key())
-    msg = client.messages.create(
-        model=DEFAULT_MODEL,
-        max_tokens=1800,
-        temperature=0.2,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": build_user_message(
-            patient_block, signal_block, guidelines_block, resources_block)}],
-    )
-    text = "".join(b.text for b in msg.content if b.type == "text")
+def _extract_json(text):
     s, e = text.find("{"), text.rfind("}")
     if s == -1 or e == -1:
-        raise ValueError(f"No JSON in model output:\n{text[:300]}")
+        raise ValueError(f"No JSON object in model output:\n{text[:300]}")
     return json.loads(text[s : e + 1])
+
+
+def _explain_live(provider, key, patient_block, signal_block, guidelines_block, resources_block):
+    """Dispatch the same prompt to whichever provider's key is configured."""
+    user = build_user_message(patient_block, signal_block, guidelines_block, resources_block)
+    model = _model_for(provider)
+
+    if provider == "anthropic":
+        import anthropic
+        client = anthropic.Anthropic(api_key=key)
+        msg = client.messages.create(
+            model=model, max_tokens=1800, temperature=0.2, system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user}],
+        )
+        text = "".join(b.text for b in msg.content if b.type == "text")
+
+    elif provider == "openai":
+        from openai import OpenAI
+        client = OpenAI(api_key=key)
+        resp = client.chat.completions.create(
+            model=model, temperature=0.2, response_format={"type": "json_object"},
+            messages=[{"role": "system", "content": SYSTEM_PROMPT},
+                      {"role": "user", "content": user}],
+        )
+        text = resp.choices[0].message.content
+
+    elif provider == "gemini":
+        import google.generativeai as genai
+        genai.configure(api_key=key)
+        gm = genai.GenerativeModel(model, system_instruction=SYSTEM_PROMPT)
+        resp = gm.generate_content(
+            user, generation_config={"temperature": 0.2,
+                                     "response_mime_type": "application/json"},
+        )
+        text = resp.text
+
+    else:
+        raise NoKeyError(f"Unknown provider: {provider}")
+
+    return _extract_json(text)
 
 
 # --- Cached demo results for the three built-in patients (keyed by seed) ---------

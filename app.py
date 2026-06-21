@@ -11,8 +11,11 @@ Synthetic data only. Not a medical device. Decision SUPPORT — the clinician de
 """
 
 import streamlit as st
+from dotenv import load_dotenv
 
-from llm import NoKeyError, explain
+load_dotenv()  # read mindbridge/.env so an API key there is picked up automatically
+
+from llm import NoKeyError, explain  # noqa: E402
 from model_engine import DEMO_CASES, analyze_patient
 from rag import (
     guideline_retriever,

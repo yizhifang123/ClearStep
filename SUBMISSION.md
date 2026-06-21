@@ -47,17 +47,18 @@ Three AI capabilities in one flow. (1) **Classification:** a *real* EEG model we
 (scikit-learn logistic regression on the public Mumtaz dataset, leave-one-subject-out
 AUC ≈ 0.95, p < 0.001) returns a calibrated, uncertainty-flagged signal. (2)
 **Retrieval (RAG):** TF-IDF matches the case to a curated, *cited* clinical-guideline
-corpus and a public support-resource directory. (3) **Generative AI:** Claude turns the
-signal + retrieved evidence into the two grounded outputs — every clinician point cites a
-guideline; the family text is written at a 6th-grade level with a next-step checklist.
+corpus and a public support-resource directory. (3) **Generative AI:** a large language
+model (Google Gemini) turns the signal + retrieved evidence into the two grounded
+outputs — every clinician point cites a guideline; the family text is written at a
+6th-grade level with a next-step checklist.
 
 **Why AI, not a pamphlet:** a generic handout can't read *this* workup, judge *its*
 uncertainty, and translate *it* for *this* family. That per-case work is what AI does.
 
 **How we built it**
 A Streamlit app. The model runs locally (always live, no API key), so the AI capability
-is always demonstrable; the written output uses Claude, with a cached demo mode so the
-three built-in patients work with zero setup. We reused the trained EEG model and
+is always demonstrable; the written output uses Google Gemini (free tier), with a cached
+demo mode so the three built-in patients work with zero setup. We reused the trained EEG model and
 synthetic-patient generator from our companion research project.
 
 **Challenges**
@@ -85,7 +86,7 @@ Claude API · Claude Code (AI coding assistance, disclosed)
 
 ## AI Architecture Explanation (≤600 chars)
 ```
-Inputs: a synthetic patient's EEG brainwave features + cortisol panel + context. AI capabilities: classification (a real trained EEG model) + retrieval (RAG) + generative AI. Processing: the EEG model outputs a calibrated, uncertainty-flagged signal; TF-IDF retrieves matching CITED clinical guidelines and public support resources; Claude turns the signal + evidence into two grounded outputs. Outputs: a clinician evidence summary (every point cites a guideline) AND a family plain-language explainer with a next-step checklist and linked resources — plus an always-on 988 crisis card.
+Inputs: a synthetic patient's EEG brainwave features + cortisol panel + context. AI capabilities: classification (a real trained EEG model) + retrieval (RAG) + generative AI. Processing: the EEG model outputs a calibrated, uncertainty-flagged signal; TF-IDF retrieves matching CITED clinical guidelines and public support resources; Gemini turns the signal + retrieved evidence into two grounded outputs. Outputs: a clinician evidence summary (every point cites a guideline) AND a family plain-language explainer with a next-step checklist and linked resources — plus an always-on 988 crisis card.
 ```
 
 ## Human-in-the-Loop Design (≤500 chars)
@@ -101,11 +102,11 @@ Risk: a family reads the AI's signal as a diagnosis — especially treating a LO
 ## Tools Used (≤800 chars)
 ```
 - scikit-learn (free, open-source) — the EEG classifier (logistic regression, which WE trained) AND the TF-IDF retrieval for RAG.
-- Anthropic Claude API (model: claude-sonnet-4-6) — paid (free trial credits available). Generates the plain-language family explainer and the guideline-grounded clinician summary.
-- Streamlit (free, open-source) — the web app. joblib + numpy (free) — model loading and math.
+- Google Gemini API (model: gemini-2.5-flash) — FREE tier. Generates the family explainer and the guideline-grounded clinician summary. The app is provider-agnostic: one interface also supports Anthropic Claude and OpenAI.
+- Streamlit, joblib, numpy, python-dotenv (all free, open-source) — web app, model loading, math, config.
 - AI coding assistance: Claude Code (disclosed) — scaffolding and copy.
 
-No paid tool is required to run it: the model runs locally and the demo patients use cached text, so the full app works for free.
+No paid tool is required: the model runs locally and Gemini's free tier covers the text, so the whole app runs free.
 ```
 
 ## Data Disclosure (≤800 chars)
