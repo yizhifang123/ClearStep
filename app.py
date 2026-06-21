@@ -10,20 +10,24 @@ Built for the USAII Global AI Hackathon 2026 (HS Challenge 1: "Help is Hard to F
 Synthetic data only. Not a medical device. Decision SUPPORT -- the clinician decides.
 """
 
+import random
+
 import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()  # read mindbridge/.env so an API key there is picked up automatically
 
+from cases import ARCHETYPE_LABELS, DEMO_PATIENTS, patient_labels  # noqa: E402
 from llm import NoKeyError, explain  # noqa: E402
-from model_engine import DEMO_CASES, analyze_patient  # noqa: E402
+from model_engine import analyze_patient  # noqa: E402
 from rag import (  # noqa: E402
     guideline_retriever,
     guidelines_block,
     resource_retriever,
     resources_block,
+    retrieve_note_excerpts,
 )
-from synthetic import ARCHETYPES, archetype_label  # noqa: E402
+from synthetic import archetype_label  # noqa: E402
 
 BANDS = ["delta", "theta", "alpha", "beta", "gamma"]
 
@@ -132,6 +136,26 @@ def _res_card(r):
     )
 
 
+def _select_patient():
+    """Friendly patient picker. Returns (seed, archetype, default_note, is_demo)."""
+    use_custom = st.toggle("Build a custom patient instead", value=False)
+    if not use_custom:
+        choice = st.selectbox("Choose a patient", patient_labels())
+        info = DEMO_PATIENTS[choice]
+        st.caption(info["vignette"])
+        return info["seed"], info["archetype"], info["note"], True
+
+    label = st.selectbox("EEG presentation pattern", list(ARCHETYPE_LABELS.values()))
+    arch = next(k for k, v in ARCHETYPE_LABELS.items() if v == label)
+    cols = st.columns([1, 2])
+    if cols[0].button("Generate a new patient"):
+        st.session_state.custom_seed = random.randint(1000, 99999)
+    seed = st.session_state.get("custom_seed", 4242)
+    st.caption(f"Custom synthetic patient · id SYN-{seed:05d} · "
+               "paste your own mock note below (needs an API key for the written output).")
+    return seed, arch, "", False
+
+
 def main():
     st.set_page_config(page_title="MindBridge", layout="centered")
     st.title("MindBridge")
@@ -144,46 +168,55 @@ def main():
     disclaimer()
     g_ret, r_ret = retrievers()
 
-    st.markdown("### 1. Clinician: choose a synthetic patient")
-    pick = st.selectbox("Demo patient", list(DEMO_CASES.keys()))
-    seed, arch = DEMO_CASES[pick]
-    with st.expander("…or build a custom synthetic patient"):
-        seed = st.number_input("Seed", value=int(seed), step=1)
-        arch = st.selectbox("Archetype", ARCHETYPES, index=ARCHETYPES.index(arch))
-
+    st.markdown("### 1. Choose a patient")
+    seed, arch, default_note, is_demo = _select_patient()
     result = analyze_patient(int(seed), arch)
+
     st.markdown("### 2. Synthetic inputs")
     show_inputs(result["patient"])
 
+    st.markdown("### 3. Physician note")
+    st.caption("Synthetic / mock notes only — never paste a real patient's records. "
+               "The AI grounds its explanation in this note (nothing is stored).")
+    note = st.text_area("Physician note", value=default_note, height=180,
+                        key=f"note_{seed}_{is_demo}", label_visibility="collapsed")
+
     if st.button("Run AI analysis", type="primary", use_container_width=True):
-        with st.spinner("Running the EEG model and grounding in guidelines…"):
-            st.markdown("### 3. Model signal")
+        with st.spinner("Running the EEG model and grounding in guidelines & note…"):
+            st.markdown("### 4. Model signal")
             signal_card(result)
 
             q = (f"adolescent depression treatment safety {result['confidence']} signal "
                  f"{'high' if result['p_mdd'] > 0.5 else 'low'}")
             guides = g_ret.retrieve(q, top_k=5)
             resources = r_ret.retrieve(q, top_k=5)
+            note_excerpts = retrieve_note_excerpts(note, q, top_k=4) if note.strip() else []
+            note_block = "\n".join(note_excerpts)
             sig_txt = (f"P(MDD)={result['p_mdd']:.2f}, confidence={result['confidence']}, "
                        f"OOD_flags={len(result['ood_flags'])}, "
                        f"subtype_leaning(illustrative)={result['subtype_leaning']}")
             pat = result["patient"]
             pat_txt = f"age {pat['age']} {pat['sex']}, synthetic case {pat['case_id']}"
 
-            is_demo = pick in DEMO_CASES and (int(seed), arch) == DEMO_CASES[pick]
             try:
                 out = explain(pat_txt, sig_txt, guidelines_block(guides),
                               resources_block(resources),
-                              demo_seed=int(seed) if is_demo else None)
+                              demo_seed=int(seed) if is_demo else None,
+                              note_block=note_block)
             except NoKeyError as e:
                 st.warning(str(e)); return
             except Exception as e:
                 st.error(f"Analysis error: {e}"); return
 
         if out.get("mode") == "demo":
-            st.caption("Demo mode: written output is cached (no API key). The model signal above is live.")
+            st.caption("Demo mode: written output is cached (no API key). The model signal is live. "
+                       "Add an API key to tailor the explanation to the note above.")
+        if note_excerpts:
+            with st.expander(f"Note excerpts the AI used ({len(note_excerpts)}, retrieved via RAG)"):
+                for ex in note_excerpts:
+                    st.markdown(f"- {ex}")
 
-        st.markdown("### 4. Two audiences, one analysis")
+        st.markdown("### 5. Two audiences, one analysis")
         tab_c, tab_f = st.tabs(["Clinician view", "Family view (plain language)"])
         with tab_c:
             clinician_view(out, guides)
@@ -192,7 +225,7 @@ def main():
 
         # --- Human-in-the-loop ---
         st.divider()
-        st.markdown("### 5. The clinician decides (human-in-the-loop)")
+        st.markdown("### 6. The clinician decides (human-in-the-loop)")
         st.caption("MindBridge does not diagnose or prescribe. Record the human decision:")
         d1, d2, d3 = st.columns(3)
         if "log" not in st.session_state:

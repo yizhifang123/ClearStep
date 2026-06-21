@@ -74,6 +74,27 @@ def resource_retriever():
     )
 
 
+def retrieve_note_excerpts(note_text, query, top_k=4):
+    """Document-level RAG over a single (synthetic) physician note.
+
+    Splits the note into chunks and TF-IDF-retrieves the chunks most relevant to the
+    query, so a long note is distilled to what matters before grounding the model.
+    Returns chunks in their original order (readability). Empty list for a blank note.
+    """
+    import re
+
+    chunks = [c.strip() for c in re.split(r"(?<=[.\n])\s+", note_text) if len(c.strip()) > 15]
+    if not chunks:
+        return []
+    if len(chunks) <= top_k:
+        return chunks
+    vec = TfidfVectorizer(stop_words="english")
+    matrix = vec.fit_transform(chunks)
+    scores = cosine_similarity(vec.transform([query]), matrix)[0]
+    keep = sorted(sorted(range(len(chunks)), key=lambda i: scores[i], reverse=True)[:top_k])
+    return [chunks[i] for i in keep]
+
+
 def guidelines_block(records):
     return "\n".join(
         f"- id={r['id']} | {r['topic']}: {r['text']} (Source: {r['source']})"

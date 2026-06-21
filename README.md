@@ -64,8 +64,12 @@ generation applied to one specific workup — exactly what AI is for.
 | AI capability | Where |
 |---|---|
 | Classification (trained model) | `model_engine.py` + `model.pkl` |
-| Retrieval / RAG | `rag.py` over `guidelines.json` + `resources.json` |
+| Retrieval / RAG | `rag.py` over `guidelines.json`, `resources.json`, **and the pasted physician note** |
 | Generative AI (plain language, grounded) | `llm.py` + `prompts.py` |
+
+**Patient-note grounding:** paste a *synthetic* physician note and a second, document-level
+RAG retrieves its key lines, so the explanation reflects *this* patient's specifics (and
+translates the note's jargon for the family). Synthetic/mock notes only — nothing is stored.
 
 ## Responsible AI
 

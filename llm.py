@@ -44,11 +44,12 @@ def _model_for(provider):
     return os.environ.get("MINDBRIDGE_MODEL", _DEFAULT_MODELS[provider])
 
 
-def explain(patient_block, signal_block, guidelines_block, resources_block, demo_seed=None):
+def explain(patient_block, signal_block, guidelines_block, resources_block,
+            demo_seed=None, note_block=""):
     provider, key = _detect_provider()
     if key:
         out = _explain_live(provider, key, patient_block, signal_block,
-                            guidelines_block, resources_block)
+                            guidelines_block, resources_block, note_block)
         out["mode"] = "live"
         out["provider"] = provider
         return out
@@ -69,9 +70,11 @@ def _extract_json(text):
     return json.loads(text[s : e + 1])
 
 
-def _explain_live(provider, key, patient_block, signal_block, guidelines_block, resources_block):
+def _explain_live(provider, key, patient_block, signal_block, guidelines_block,
+                  resources_block, note_block=""):
     """Dispatch the same prompt to whichever provider's key is configured."""
-    user = build_user_message(patient_block, signal_block, guidelines_block, resources_block)
+    user = build_user_message(patient_block, signal_block, guidelines_block,
+                              resources_block, note_block)
     model = _model_for(provider)
 
     if provider == "anthropic":

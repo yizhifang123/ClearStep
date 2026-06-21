@@ -22,6 +22,9 @@ HARD RULES:
 - In the clinician's "evidence_to_consider", every point must be grounded in the
   GUIDELINES provided to you, and must name its source. Never invent a guideline,
   statistic, drug fact, or source.
+- If a PATIENT NOTE is provided, ground your explanation in it: explain the note's
+  jargon in plain words for the family, and reflect its specifics (symptoms, scores,
+  plan) in both views. Never invent details that are not in the note.
 - For the family: write at about a 6th-grade reading level. Warm, calm, short
   sentences. Never tell a family to start, stop, or change medication — that is the
   clinician's job. Point them to understanding and support.
@@ -49,9 +52,15 @@ Return ONLY a JSON object with exactly this shape:
 Return the JSON and nothing else."""
 
 
-def build_user_message(patient_block, signal_block, guidelines_block, resources_block):
+def build_user_message(patient_block, signal_block, guidelines_block, resources_block,
+                       note_block=""):
+    note_section = (
+        f"PATIENT NOTE (synthetic; ground your explanation in this):\n{note_block}\n\n"
+        if note_block.strip() else ""
+    )
     return (
         f"SYNTHETIC PATIENT:\n{patient_block}\n\n"
+        f"{note_section}"
         f"MODEL SIGNAL:\n{signal_block}\n\n"
         f"CLINICAL GUIDELINES (cite these by source; do not invent others):\n"
         f"{guidelines_block}\n\n"

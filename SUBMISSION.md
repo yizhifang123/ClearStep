@@ -47,7 +47,9 @@ Three AI capabilities in one flow. (1) **Classification:** a *real* EEG model we
 (scikit-learn logistic regression on the public Mumtaz dataset, leave-one-subject-out
 AUC ≈ 0.95, p < 0.001) returns a calibrated, uncertainty-flagged signal. (2)
 **Retrieval (RAG):** TF-IDF matches the case to a curated, *cited* clinical-guideline
-corpus and a public support-resource directory. (3) **Generative AI:** a large language
+corpus and a public support-resource directory — and, when a clinician pastes a
+*synthetic* physician note, a second document-level RAG grounds the output in that note's
+specifics, translating its jargon for the family. (3) **Generative AI:** a large language
 model (Google Gemini) turns the signal + retrieved evidence into the two grounded
 outputs — every clinician point cites a guideline; the family text is written at a
 6th-grade level with a next-step checklist.
