@@ -98,7 +98,9 @@ def _explain_live(provider, key, patient_block, signal_block, guidelines_block,
 
     elif provider == "gemini":
         import google.generativeai as genai
-        genai.configure(api_key=key)
+        # transport="rest" avoids a gRPC asyncio "Event loop is closed" error when
+        # called from Streamlit's worker thread (no persistent event loop there).
+        genai.configure(api_key=key, transport="rest")
         gm = genai.GenerativeModel(model, system_instruction=SYSTEM_PROMPT)
         resp = gm.generate_content(
             user, generation_config={"temperature": 0.2,

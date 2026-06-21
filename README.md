@@ -4,7 +4,7 @@
 
 USAII Global AI Hackathon 2026 · High School track · Challenge 1: *Help is Hard to Find*
 
-![MindBridge clinician view](screenshot_clinician.png)
+![MindBridge family view](screenshot_family.png)
 
 ---
 
@@ -26,11 +26,11 @@ can act on — moving a scared family from *confusion → clarity → action.*
 You pick a (synthetic) patient. MindBridge runs a **real, trained EEG model**, grounds
 the result in **clinical guidelines (RAG)**, and produces two views of the same analysis:
 
-- **👩‍⚕️ Clinician view:** a calibrated, uncertainty-aware signal + guideline-cited
-  evidence to weigh + safety checks — explicitly *decision support, not a decision.*
-- **👨‍👩‍👧 Family view:** the same workup in plain 6th-grade language — what it means,
-  what matters most, a next-step checklist, and trusted support resources, with a **988
-  crisis card always on screen.**
+- **Clinician view:** a calibrated, uncertainty-aware signal + guideline-cited evidence
+  to weigh + safety checks — explicitly *decision support, not a decision.*
+- **Family view:** the same workup in plain 6th-grade language — what it means, what
+  matters most, a next-step checklist, trusted support resources (988 always included),
+  and a **downloadable take-home summary** the family can keep or print.
 
 ## Why AI — and not a pamphlet or web search
 
