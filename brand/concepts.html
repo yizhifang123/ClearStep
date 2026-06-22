@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;background:#fff;width:1680px;height:620px;color:#0a0a0a}
+  .sheet{display:flex;gap:0;padding:0}
+  .cell{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:620px;border-right:1px solid #ececec}
+  .cell:last-child{border:0}
+  .ico{width:260px;height:200px}
+  .ico path,.ico circle,.ico line{stroke:#0a0a0a;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .name{margin-top:34px;font-size:34px;font-weight:800;letter-spacing:-.02em}
+  .name .l{font-weight:500;color:#0a0a0a}
+  .tag{margin-top:8px;font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9a9a9a}
+</style></head>
+<body>
+<div class="sheet">
+
+  <!-- Concept A: suspension bridge — cables read as an M and a brainwave -->
+  <div class="cell">
+    <svg class="ico" viewBox="0 0 120 90">
+      <path d="M10 64 H110" stroke-width="4"/>
+      <path d="M40 64 V26" stroke-width="3"/>
+      <path d="M80 64 V26" stroke-width="3"/>
+      <path d="M10 60 C26 28 32 26 40 26 C52 26 52 48 60 48 C68 48 68 26 80 26 C88 26 94 28 110 60" stroke-width="3.5"/>
+      <path d="M25 38 V64" stroke-width="1.6"/>
+      <path d="M50 45 V64" stroke-width="1.6"/>
+      <path d="M70 45 V64" stroke-width="1.6"/>
+      <path d="M95 40 V64" stroke-width="1.6"/>
+    </svg>
+    <div class="name">MindBridge</div>
+    <div class="tag">A · Suspension</div>
+  </div>
+
+  <!-- Concept B: arch bridge with the road drawn as an EEG pulse -->
+  <div class="cell">
+    <svg class="ico" viewBox="0 0 120 90">
+      <path d="M16 60 A 44 44 0 0 1 104 60" stroke-width="3.2"/>
+      <path d="M8 60 H44 l5 -15 l6 28 l6 -22 l5 9 H112" stroke-width="4"/>
+      <path d="M16 60 V72" stroke-width="3"/>
+      <path d="M104 60 V72" stroke-width="3"/>
+      <path d="M60 60 V18" stroke-width="1.6"/>
+      <path d="M38 60 V31" stroke-width="1.6"/>
+      <path d="M82 60 V31" stroke-width="1.6"/>
+    </svg>
+    <div class="name">MindBridge</div>
+    <div class="tag">B · Arch + wave</div>
+  </div>
+
+  <!-- Concept C: a brainwave line that arcs into a bridge between two piers -->
+  <div class="cell">
+    <svg class="ico" viewBox="0 0 120 90">
+      <path d="M14 66 C24 30 40 26 50 42 L55 28 L61 52 L67 34 C80 26 96 32 106 66" stroke-width="3.4"/>
+      <circle cx="14" cy="66" r="3.4" fill="#0a0a0a" stroke="none"/>
+      <circle cx="106" cy="66" r="3.4" fill="#0a0a0a" stroke="none"/>
+      <path d="M8 72 H112" stroke-width="2"/>
+    </svg>
+    <div class="name">MindBridge</div>
+    <div class="tag">C · Wave bridge</div>
+  </div>
+
+</div>
+</body></html>
